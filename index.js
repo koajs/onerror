@@ -67,22 +67,10 @@ function onerror(app, options) {
       ? options.all(this, err)
       : options[type](this, err);
 
-    switch (type) {
-    case 'json':
-      this.type = 'json';
+    this.type = type;
+    if (type === 'json') {
       this.body = JSON.stringify(this.body);
-      break;
-    case 'html':
-      this.type = 'html';
-      break;
-    case 'text':
-      this.type = 'text';
-      if (!this.body) {
-        this.body = http.STATUS_CODES[this.status];
-      }
-      break;
     }
-
     this.res.end(this.body);
   };
 
@@ -112,17 +100,15 @@ function onerror(app, options) {
    */
 
   function text(ctx, err) {
+    ctx.res._headers = {};
     if (isDev || err.expose) {
       ctx.body = err.message;
       return;
     }
-    ctx.res._headers = {};
-
-    // force text/plain
-    ctx.type = 'text';
 
     // status body
     ctx.status = err.status || 500;
+    ctx.body = http.STATUS_CODES[ctx.status];
   }
 
   /**
