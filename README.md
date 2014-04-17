@@ -3,6 +3,12 @@ koa-error-handler
 
 an error handler for koa, hack ctx.onerror
 
+different with [koa-error](https://github.com/kosjs/koa):
+- we can not just use try catch to handle all errors, steams' and events'
+errors are directly handle by `ctx.onerror`, so if we want to handle all
+errors in one place, only way i can see is to hack `ctx.onerror`.
+- also it is more customizable.
+
 ## install
 
 ```bash
