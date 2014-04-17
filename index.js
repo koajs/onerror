@@ -100,13 +100,13 @@ function onerror(app, options) {
 
   function text(ctx, err) {
     ctx.res._headers = {};
+    ctx.status = err.status || 500;
     if (isDev || err.expose) {
       ctx.body = err.message;
       return;
     }
 
     // status body
-    ctx.status = err.status || 500;
     ctx.body = http.STATUS_CODES[ctx.status];
   }
 
