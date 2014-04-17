@@ -1,4 +1,4 @@
-koa-error-handler
+koa-onerror
 =================
 
 an error handler for koa, hack ctx.onerror
@@ -6,13 +6,13 @@ an error handler for koa, hack ctx.onerror
 different with [koa-error](https://github.com/kosjs/koa):
 - we can not just use try catch to handle all errors, steams' and events'
 errors are directly handle by `ctx.onerror`, so if we want to handle all
-errors in one place, only way i can see is to hack `ctx.onerror`.
-- also it is more customizable.
+errors in one place, the only way i can see is to hack `ctx.onerror`.
+- it is more customizable.
 
 ## install
 
 ```bash
-npm install koa-error-handler
+npm install koa-onerror
 ```
 
 ## Usage
@@ -20,10 +20,10 @@ npm install koa-error-handler
 ```js
 var fs = require('fs');
 var koa = require('koa');
-var error = require('koa-error-handler');
+var onerror = require('koa-onerror');
 var app = koa();
 
-error(app);
+onerror(app);
 
 app.use(function *(){
   // foo();

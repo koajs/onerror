@@ -1,5 +1,5 @@
 /*!
- * koa-error-handler - index.js
+ * koa-onerror - index.js
  * Copyright(c) 2014 dead_horse <dead_horse@qq.com>
  * MIT Licensed
  */
@@ -11,7 +11,6 @@
  */
 
 var http = require('http');
-var debug = require('debug')('koa-error-handler');
 var copy = require('copy-to');
 var swig = require('swig');
 
