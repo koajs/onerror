@@ -62,12 +62,10 @@ function onerror(app, options) {
       err.status = 404;
     }
 
-    if (options.all) {
-      return options.all(this, err);
-    }
-
     var type = this.accepts('html', 'text', 'json') || 'text';
-    options[type](this, err);
+    options.all
+      ? options.all(this, err)
+      : options[type](this, err);
 
     switch (type) {
     case 'json':
