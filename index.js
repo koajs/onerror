@@ -62,11 +62,13 @@ function onerror(app, options) {
     }
 
     var type = this.accepts('html', 'text', 'json') || 'text';
-    options.all
-      ? options.all.call(this, err)
-      : options[type].call(this, err);
+    if (options.all) {
+      options.all.call(this, err);
+    } else {
+      options[type].call(this, err);
+      this.type = type;
+    }
 
-    this.type = type;
     if (type === 'json') {
       this.body = JSON.stringify(this.body);
     }
