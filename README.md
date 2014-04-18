@@ -1,5 +1,6 @@
 koa-onerror
 =================
+[![Build Status](https://travis-ci.org/node-modules/koa-onerror.svg?branch=master)](https://travis-ci.org/node-modules/koa-onerror)
 
 an error handler for koa, hack ctx.onerror
 
