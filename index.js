@@ -63,8 +63,8 @@ function onerror(app, options) {
 
     var type = this.accepts('html', 'text', 'json') || 'text';
     options.all
-      ? options.all(this, err)
-      : options[type](this, err);
+      ? options.all.call(this, err)
+      : options[type].call(this, err);
 
     this.type = type;
     if (type === 'json') {
@@ -75,50 +75,45 @@ function onerror(app, options) {
 
   /**
    * default html error handler
-   * @param {Context} ctx
    * @param {Error} err
    */
 
-  function html(ctx, err) {
-    ctx.body = render({
+  function html(err) {
+    this.body = render({
       env: env,
-      ctx: ctx,
-      request: ctx.request,
-      response: ctx.response,
+      ctx: this,
+      request: this.request,
+      response: this.response,
       error: err.message,
       stack: err.stack,
-      status: ctx.status,
+      status: this.status,
       code: err.code
     });
   }
 
   /**
    * default text error handler
-   * @param {Context} ctx
    * @param {Error} err
    */
 
-  function text(ctx, err) {
-    ctx.res._headers = {};
-    ctx.status = err.status || 500;
-    if (isDev || err.expose) {
-      ctx.body = err.message;
-      return;
-    }
+  function text(err) {
+    this.res._headers = {};
+    this.status = err.status || 500;
 
-    // status body
-    ctx.body = http.STATUS_CODES[ctx.status];
+    this.body = isDev || err.expose
+      ? err.message
+      : http.STATUS_CODES[this.status];
   }
 
   /**
    * default json error handler
-   * @param {Context} ctx
    * @param {Error} err
    */
 
-  function json(ctx, err) {
-    ctx.body = isDev || err.expose
+  function json(err) {
+    this.status = err.status || 500;
+    this.body = isDev || err.expose
       ? { error: err.message }
-      : { error: http.STATUS_CODES[ctx.status] };
+      : { error: http.STATUS_CODES[this.status] };
   }
 }

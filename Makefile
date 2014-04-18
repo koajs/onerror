@@ -12,7 +12,7 @@ jshint: install
 	@-./node_modules/.bin/jshint ./
 
 test:
-	@NODE_ENV=test ./node_modules/.bin/mocha \
+	@./node_modules/.bin/mocha \
 	  --harmony \
 	  --bail \
 		--reporter $(REPORTER) \
@@ -22,7 +22,7 @@ test:
 		$(TESTS)
 
 test-cov:
-	@NODE_ENV=test node --harmony \
+	@node --harmony \
 		node_modules/.bin/istanbul cover --preserve-comments \
 		./node_modules/.bin/_mocha \
 		-- -u exports \
