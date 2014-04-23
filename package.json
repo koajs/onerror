@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/node-modules/koa-onerror.git"
+    "url": "git://github.com/koajs/onerror.git"
   },
   "keywords": [
     "koa",
@@ -22,9 +22,9 @@
   "author": "dead_horse <dead_horse@qq.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/node-modules/koa-onerror/issues"
+    "url": "https://github.com/koajs/onerror/issues"
   },
-  "homepage": "https://github.com/node-modules/koa-onerror",
+  "homepage": "https://github.com/koajs/onerror",
   "devDependencies": {
     "autod": "^0.1.3",
     "istanbul-harmony": "*",
