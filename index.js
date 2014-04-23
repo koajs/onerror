@@ -61,6 +61,8 @@ function onerror(app, options) {
       err.status = 404;
     }
 
+    this.status = err.status || 500;
+
     var type = this.accepts('html', 'text', 'json') || 'text';
     if (options.all) {
       options.all.call(this, err);
@@ -100,7 +102,6 @@ function onerror(app, options) {
 
   function text(err) {
     this.res._headers = {};
-    this.status = err.status || 500;
 
     this.body = isDev || err.expose
       ? err.message
@@ -113,7 +114,6 @@ function onerror(app, options) {
    */
 
   function json(err) {
-    this.status = err.status || 500;
     this.body = isDev || err.expose
       ? { error: err.message }
       : { error: http.STATUS_CODES[this.status] };
