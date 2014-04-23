@@ -35,8 +35,7 @@
     "supertest": "0.11.0"
   },
   "dependencies": {
-    "copy-to": "0.0.3",
-    "koa": "0.5.5",
-    "swig": "1.3.2"
+    "copy-to": "^1.0.0",
+    "swig": "^1.3.2"
   }
 }

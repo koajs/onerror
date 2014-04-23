@@ -2,7 +2,7 @@ koa-onerror
 =================
 [![Build Status](https://travis-ci.org/node-modules/koa-onerror.svg?branch=master)](https://travis-ci.org/node-modules/koa-onerror)
 
-an error handler for koa, hack ctx.onerror
+an error handler for koa, hack ctx.onerror.
 
 different with [koa-error](https://github.com/kosjs/koa):
 - we can not just use try catch to handle all errors, steams' and events'
@@ -35,7 +35,7 @@ app.use(function *(){
 ## Options
 
 ```
-error(app, options);
+onerror(app, options);
 ```
 
 * **all**: if options.all exist, ignore negotiation
@@ -43,6 +43,8 @@ error(app, options);
 * **json**: json error handler
 * **html**: html error handler
 * **template**: default html error handler template path
+
+check out default handler to write your own handler.
 
 ## License
 MIT
