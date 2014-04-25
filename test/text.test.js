@@ -11,13 +11,14 @@
  */
 
 var fs = require('fs');
-var onerror = require('..');
 var koa = require('koa');
 var request = require('supertest');
+var onerror = require('..');
 
 describe('text.test.js', function () {
   it('should common error ok', function (done) {
     var app = koa();
+    app.outputErrors = false;
     onerror(app);
     app.use(commonError);
 
@@ -28,8 +29,22 @@ describe('text.test.js', function () {
     .expect('foo is not defined', done);
   });
 
+  it('should show error message ok', function (done) {
+    var app = koa();
+    app.outputErrors = false;
+    onerror(app);
+    app.use(exposeError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'text/plain')
+    .expect(500)
+    .expect('this message will be expose', done);
+  });
+
   it('should stream error ok', function (done) {
     var app = koa();
+    app.outputErrors = false;
     onerror(app);
     app.use(streamError);
 
@@ -42,6 +57,7 @@ describe('text.test.js', function () {
 
   it('should custom handler', function (done) {
     var app = koa();
+    app.outputErrors = false;
     onerror(app, {
       text: function () {
         this.status = 500;
@@ -57,6 +73,12 @@ describe('text.test.js', function () {
     .expect('error', done);
   });
 });
+
+function* exposeError() {
+  var err = new Error('this message will be expose');
+  err.expose = true;
+  throw err;
+}
 
 function* commonError() {
   foo();

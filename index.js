@@ -32,6 +32,7 @@ function onerror(app, options) {
     html: html,
     text: text,
     json: json,
+    redirect: null,
     template: path.join(__dirname, 'error.html'),
   };
 
@@ -48,17 +49,16 @@ function onerror(app, options) {
 
     assert(err instanceof Error, 'non-error thrown: ' + err);
 
+    // delegate
+    this.app.emit('error', err, this);
+
     // nothing we can do here other
     // than delegate to the app-level
     // handler and log.
     if (this.headerSent || !this.writable) {
       err.headerSent = true;
-      this.app.emit('error', err, this);
       return;
     }
-
-    // delegate
-    this.app.emit('error', err, this);
 
     // ENOENT support
     if ('ENOENT' === err.code) {
@@ -71,8 +71,12 @@ function onerror(app, options) {
     if (options.all) {
       options.all.call(this, err);
     } else {
-      options[type].call(this, err);
-      this.type = type;
+      if (options.redirect && type !== 'json') {
+        this.redirect(options.redirect);
+      } else {
+        options[type].call(this, err);
+        this.type = type;
+      }
     }
 
     if (type === 'json') {

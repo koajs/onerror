@@ -27,6 +27,8 @@
   "homepage": "https://github.com/koajs/onerror",
   "devDependencies": {
     "autod": "^0.1.3",
+    "co-sleep": "0.0.1",
+    "cov": "*",
     "istanbul-harmony": "*",
     "jshint": "*",
     "koa": "^0.5.5",
@@ -35,7 +37,7 @@
     "supertest": "0.11.0"
   },
   "dependencies": {
-    "copy-to": "^1.0.0",
+    "copy-to": "^1.0.1",
     "swig": "^1.3.2"
   }
 }
