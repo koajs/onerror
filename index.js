@@ -10,9 +10,9 @@
  * Module dependencies.
  */
 
+var fs = require('fs');
 var http = require('http');
 var copy = require('copy-to');
-var swig = require('swig');
 
 var env = process.env.NODE_ENV || 'development';
 var isDev = env === 'development';
@@ -30,11 +30,16 @@ function onerror(app, options) {
     html: html,
     text: text,
     json: json,
-    template: __dirname + '/error.html'
+    template: __dirname + '/error.html',
+    encoding: 'utf8',
+    engine: 'swig'
   };
 
   copy(defaultOptions).to(options);
-  var render = swig.compileFile(options.template);
+
+  var source = fs.readFileSync(options.template, options);
+  var engine = require(options.engine);
+  var render = engine.compile(source, options);
 
   app.context.onerror = function(err) {
     // don't do anything if there is no error.
