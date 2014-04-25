@@ -1,4 +1,10 @@
 
+1.0.3 / 2014-04-25
+==================
+
+  * Merge pull request #2 from koajs/redirect
+  * Allow `options.redirect = 'http://example/500.html'`.
+
 1.0.2 / 2014-04-25
 ==================
 
