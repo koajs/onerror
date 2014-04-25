@@ -32,10 +32,10 @@
     "koa": "^0.5.5",
     "mocha": "*",
     "should": "*",
-    "supertest": "0.11.0"
+    "supertest": "0.11.0",
+    "swig": "^1.3.2"
   },
   "dependencies": {
-    "copy-to": "^1.0.0",
-    "swig": "^1.3.2"
+    "copy-to": "^1.0.0"
   }
 }
