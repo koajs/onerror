@@ -18,6 +18,7 @@ var request = require('supertest');
 describe('json.test.js', function () {
   it('should common error ok', function (done) {
     var app = koa();
+    app.outputErrors = false;
     onerror(app);
     app.use(commonError);
 
@@ -30,6 +31,7 @@ describe('json.test.js', function () {
 
   it('should stream error ok', function (done) {
     var app = koa();
+    app.outputErrors = false;
     onerror(app);
     app.use(streamError);
 
@@ -42,6 +44,7 @@ describe('json.test.js', function () {
 
   it('should custom handler', function (done) {
     var app = koa();
+    app.outputErrors = false;
     onerror(app, {
       json: function () {
         this.status = 500;

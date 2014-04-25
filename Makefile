@@ -1,5 +1,5 @@
 TESTS = test/*.test.js
-REPORTER = tap
+REPORTER = spec
 TIMEOUT = 3000
 MOCHA_OPTS =
 REGISTRY = --registry=http://r.cnpmjs.org
@@ -11,7 +11,7 @@ install:
 jshint: install
 	@-./node_modules/.bin/jshint ./
 
-test:
+test: install
 	@./node_modules/.bin/mocha \
 	  --harmony \
 	  --bail \
@@ -21,7 +21,7 @@ test:
 		$(MOCHA_OPTS) \
 		$(TESTS)
 
-test-cov:
+test-cov: install
 	@node --harmony \
 		node_modules/.bin/istanbul cover --preserve-comments \
 		./node_modules/.bin/_mocha \
@@ -31,9 +31,9 @@ test-cov:
 		--require should \
 		$(MOCHA_OPTS) \
 		$(TESTS)
-	@./node_modules/.bin/alicov coverage
+	@./node_modules/.bin/cov coverage
 
-autod:
+autod: install
 	@./node_modules/.bin/autod $(REGISTRY) -w
 	@$(MAKE) install
 
