@@ -10,6 +10,7 @@
  * Module dependencies.
  */
 
+var assert = require('assert');
 var http = require('http');
 var copy = require('copy-to');
 var swig = require('swig');
@@ -40,9 +41,11 @@ function onerror(app, options) {
     // don't do anything if there is no error.
     // this allows you to pass `this.onerror`
     // to node-style callbacks.
-    if (!err) {
+    if (null == err) {
       return;
     }
+
+    assert(err instanceof Error, 'non-error thrown: ' + err);
 
     // nothing we can do here other
     // than delegate to the app-level
