@@ -12,6 +12,7 @@
 
 var assert = require('assert');
 var http = require('http');
+var path = require('path');
 var copy = require('copy-to');
 var swig = require('swig');
 
@@ -31,7 +32,7 @@ function onerror(app, options) {
     html: html,
     text: text,
     json: json,
-    template: __dirname + '/error.html'
+    template: path.join(__dirname, 'error.html'),
   };
 
   copy(defaultOptions).to(options);
