@@ -43,6 +43,7 @@ onerror(app, options);
 * **json**: json error handler
 * **html**: html error handler
 * **template**: default html error handler template path
+* **redirect**: if accepct html, can redirect to another error page
 
 check out default handler to write your own handler.
 
