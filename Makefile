@@ -2,11 +2,11 @@ TESTS = test/*.test.js
 REPORTER = spec
 TIMEOUT = 3000
 MOCHA_OPTS =
-REGISTRY = --registry=http://r.cnpmjs.org
+REGISTRY = --registry=https://registry.npm.taobao.org
 
 install:
 	@npm install $(REGISTRY) \
-		--disturl=http://dist.cnpmjs.org
+		--disturl=http://npm.taobao.org/dist
 
 jshint: install
 	@-./node_modules/.bin/jshint ./
@@ -14,7 +14,6 @@ jshint: install
 test: install
 	@./node_modules/.bin/mocha \
 	  --harmony \
-	  --bail \
 		--reporter $(REPORTER) \
 		--timeout $(TIMEOUT) \
 		--require should \
@@ -34,7 +33,7 @@ test-cov: install
 	@./node_modules/.bin/cov coverage
 
 autod: install
-	@./node_modules/.bin/autod $(REGISTRY) -w
+	@./node_modules/.bin/autod $(REGISTRY) -w --prefix "^" -e example.js
 	@$(MAKE) install
 
 .PHONY: test test-all
