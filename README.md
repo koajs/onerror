@@ -14,7 +14,7 @@ koa-onerror
 [coveralls-image]: https://img.shields.io/coveralls/koajs/onerror.svg?style=flat
 [coveralls-url]: https://coveralls.io/r/koajs/onerror?branch=master
 [gittip-image]: https://img.shields.io/gittip/dead_horse.svg?style=flat
-[gittip-url]: https://www.gittip.com/dead_horse/
+[gittip-url]: https://www.gittip.com/dead-horse/
 [david-image]: https://img.shields.io/david/koajs/onerror.svg?style=flat
 [david-url]: https://david-dm.org/koajs/onerror
 
