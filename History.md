@@ -1,4 +1,13 @@
 
+1.1.0 / 2014-08-05 
+==================
+
+  * fix link
+  * Merge pull request #4 from koajs/custom-accepts
+  * update links and add coveralls
+  * Support options.accepts custom detect function
+  * fix readme
+
 1.0.3 / 2014-04-25
 ==================
 
