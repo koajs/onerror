@@ -34,6 +34,7 @@ function onerror(app, options) {
     json: json,
     redirect: null,
     template: path.join(__dirname, 'error.html'),
+    accepts: null,
   };
 
   copy(defaultOptions).to(options);
@@ -66,8 +67,13 @@ function onerror(app, options) {
     }
 
     this.status = err.status || 500;
-
-    var type = this.accepts('html', 'text', 'json') || 'text';
+    var type = 'text';
+    if (options.accepts) {
+      type = options.accepts.call(this, 'html', 'text', 'json');
+    } else {
+      type = this.accepts('html', 'text', 'json');
+    }
+    type = type || 'text';
     if (options.all) {
       options.all.call(this, err);
     } else {

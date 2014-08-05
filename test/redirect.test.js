@@ -22,7 +22,7 @@ var onerror = require('..');
 describe('redirect.test.js', function () {
   it('should handle error and redirect to real error page', function (done) {
     var app = koa();
-    app.outputErrors = false;
+    app.on('error', function () {});
     onerror(app, {
       redirect: 'http://example/500.html'
     });
@@ -38,7 +38,7 @@ describe('redirect.test.js', function () {
 
   it('should got text/plain header', function (done) {
     var app = koa();
-    app.outputErrors = false;
+    app.on('error', function () {});
     onerror(app, {
       redirect: 'http://example/500.html'
     });
@@ -54,7 +54,7 @@ describe('redirect.test.js', function () {
 
   it('should show json when accept is json', function (done) {
     var app = koa();
-    app.outputErrors = false;
+    app.on('error', function () {});
     onerror(app, {
       redirect: 'http://example/500.html'
     });
@@ -63,7 +63,7 @@ describe('redirect.test.js', function () {
     request(app.callback())
     .get('/')
     .set('Accept', 'application/json')
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .expect({"error":"foo is not defined"}, done);
   });
 });

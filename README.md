@@ -1,6 +1,22 @@
 koa-onerror
 =================
-[![Build Status](https://travis-ci.org/koajs/onerror.svg?branch=master)](https://travis-ci.org/koajs/onerror)
+
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Gittip][gittip-image]][gittip-url]
+[![David deps][david-image]][david-url]
+
+[npm-image]: https://img.shields.io/npm/v/koa-onerror.svg?style=flat
+[npm-url]: https://npmjs.org/package/koa-onerror
+[travis-image]: https://img.shields.io/travis/koajs/onerror.svg?style=flat
+[travis-url]: https://travis-ci.org/koajs/onerror
+[coveralls-image]: https://img.shields.io/coveralls/koajs/onerror.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/koajs/onerror?branch=master
+[gittip-image]: https://img.shields.io/gittip/dead_horse.svg?style=flat
+[gittip-url]: https://www.gittip.com/dead_horse/
+[david-image]: https://img.shields.io/david/koajs/onerror.svg?style=flat
+[david-url]: https://david-dm.org/koajs/onerror
 
 an error handler for koa, hack ctx.onerror.
 

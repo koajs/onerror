@@ -19,7 +19,7 @@ var onerror = require('..');
 describe('html.test.js', function () {
   it('should common error ok', function (done) {
     var app = koa();
-    app.outputErrors = false;
+    app.on('error', function () {});
     onerror(app);
     app.use(commonError);
 
@@ -31,7 +31,7 @@ describe('html.test.js', function () {
 
   it('should common error after sleep a little while ok', function (done) {
     var app = koa();
-    app.outputErrors = false;
+    app.on('error', function () {});
     onerror(app);
     app.use(commonSleepError);
 
@@ -43,7 +43,7 @@ describe('html.test.js', function () {
 
   it('should stream error ok', function (done) {
     var app = koa();
-    app.outputErrors = false;
+    app.on('error', function () {});
     onerror(app);
     app.use(streamError);
 
