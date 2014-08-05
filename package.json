@@ -27,18 +27,17 @@
   "homepage": "https://github.com/koajs/onerror",
   "devDependencies": {
     "autod": "*",
-    "co-sleep": "^0.0.1",
-    "cov": "*",
+    "co-sleep": "~0.0.1",
     "istanbul-harmony": "*",
     "jshint": "*",
-    "koa": "^0.8.2",
+    "koa": "~0.8.2",
     "mocha": "*",
-    "pedding": "^1.0.0",
+    "pedding": "~1.0.0",
     "should": "*",
-    "supertest": "^0.13.0"
+    "supertest": "~0.13.0"
   },
   "dependencies": {
-    "copy-to": "^1.0.1",
-    "swig": "^1.4.2"
+    "copy-to": "~1.0.1",
+    "swig": "~1.4.2"
   }
 }

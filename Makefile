@@ -30,10 +30,20 @@ test-cov: install
 		--require should \
 		$(MOCHA_OPTS) \
 		$(TESTS)
-	@./node_modules/.bin/cov coverage
+
+test-travis: install
+	@node --harmony \
+		node_modules/.bin/istanbul cover --preserve-comments \
+		./node_modules/.bin/_mocha \
+		--report lcovonly \
+		-- \
+		--reporter dot \
+		--timeout $(TIMEOUT) \
+		$(MOCHA_OPTS) \
+		$(TESTS)
 
 autod: install
-	@./node_modules/.bin/autod $(REGISTRY) -w --prefix "^" -e example.js
+	@./node_modules/.bin/autod $(REGISTRY) -w --prefix "~" -e example.js
 	@$(MAKE) install
 
 .PHONY: test test-all
