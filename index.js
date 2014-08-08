@@ -66,7 +66,11 @@ function onerror(app, options) {
       err.status = 404;
     }
 
-    this.status = err.status || 500;
+    if ('number' !== typeof err.status || !http.STATUS_CODES[err.status]) {
+      err.status = 500;
+    }
+    this.status = err.status;
+
     var type = 'text';
     if (options.accepts) {
       type = options.accepts.call(this, 'html', 'text', 'json');
