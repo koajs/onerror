@@ -30,14 +30,14 @@
     "co-sleep": "~0.0.1",
     "istanbul-harmony": "*",
     "jshint": "*",
-    "koa": "~0.8.2",
+    "koa": "~0.20.0",
     "mocha": "*",
     "pedding": "~1.0.0",
     "should": "*",
-    "supertest": "~0.13.0"
+    "supertest": "~0.15.0"
   },
   "dependencies": {
-    "copy-to": "~1.0.1",
+    "copy-to": "~2.0.1",
     "swig": "~1.4.2"
   }
 }

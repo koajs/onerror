@@ -10,6 +10,7 @@
  * Module dependencies.
  */
 
+var should = require('should');
 var fs = require('fs');
 var onerror = require('..');
 var koa = require('koa');
@@ -38,8 +39,12 @@ describe('json.test.js', function () {
     request(app.callback())
     .get('/')
     .set('Accept', 'application/json')
-    .expect(404)
-    .expect( { error: 'ENOENT, open \'not exist\'' }, done);
+    .expect(404, function (err, res) {
+      should.not.exist(err);
+      res.body.error.should.be.a.String;
+      res.body.error.should.containEql('ENOENT');
+      done();
+    });
   });
 
   it('should custom handler', function (done) {
