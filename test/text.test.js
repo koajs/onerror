@@ -52,7 +52,7 @@ describe('text.test.js', function () {
     .get('/')
     .set('Accept', 'text/plain')
     .expect(404)
-    .expect('ENOENT, open \'not exist\'', done);
+    .expect(/ENOENT/, done);
   });
 
   it('should custom handler', function (done) {
