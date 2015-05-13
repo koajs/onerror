@@ -1,4 +1,10 @@
 
+1.2.1 / 2015-05-13 
+==================
+
+  * Merge pull request #5 from koajs/fix-test-iojs
+  * fix: test run on iojs and upgrade copy-to
+
 1.2.0 / 2014-08-08
 ==================
 
