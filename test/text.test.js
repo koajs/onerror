@@ -42,6 +42,18 @@ describe('text.test.js', function () {
     .expect('this message will be expose', done);
   });
 
+  it('should show default message if undefined', function (done) {
+    var app = koa();
+    app.on('error', function () {});
+    onerror(app);
+    app.use(exposeBlankError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'text/plain')
+    .expect(500, done);
+  });
+
   it('should stream error ok', function (done) {
     var app = koa();
     app.on('error', function () {});
@@ -76,6 +88,13 @@ describe('text.test.js', function () {
 
 function* exposeError() {
   var err = new Error('this message will be expose');
+  err.expose = true;
+  throw err;
+}
+
+function* exposeBlankError() {
+  var err = new Error();
+  err.message = undefined;
   err.expose = true;
   throw err;
 }

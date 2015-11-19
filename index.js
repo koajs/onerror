@@ -122,7 +122,7 @@ function onerror(app, options) {
     this.res._headers = {};
 
     this.body = isDev || err.expose
-      ? err.message
+      ? err.message || http.STATUS_CODES[this.status]
       : http.STATUS_CODES[this.status];
   }
 
