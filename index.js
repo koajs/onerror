@@ -136,4 +136,6 @@ function onerror(app, options) {
       ? { error: err.message }
       : { error: http.STATUS_CODES[this.status] };
   }
+
+  return app;
 }
