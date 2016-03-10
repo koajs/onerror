@@ -63,5 +63,9 @@ onerror(app, options);
 
 check out default handler to write your own handler.
 
+## Status and Headers
+
+`koa-onerror` will automatic set `err.status` as response status code, and `err.headers` as response headers.
+
 ## License
 MIT
