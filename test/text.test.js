@@ -42,6 +42,19 @@ describe('text.test.js', function () {
     .expect('this message will be expose', done);
   });
 
+  it('should set headers from error.headers ok', function (done) {
+    var app = koa();
+    app.on('error', function () {});
+    onerror(app);
+    app.use(headerError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'text/plain')
+    .expect(500)
+    .expect('foo', 'bar', done);
+  });
+
   it('should stream error ok', function (done) {
     var app = koa();
     app.on('error', function () {});
@@ -82,6 +95,14 @@ function* exposeError() {
 
 function* commonError() {
   foo();
+}
+
+function* headerError() {
+  var err = new Error('error with headers');
+  err.headers = {
+    foo: 'bar'
+  };
+  throw err;
 }
 
 function* streamError() {

@@ -71,6 +71,10 @@ function onerror(app, options) {
     }
     this.status = err.status;
 
+    // unset all headers, and set those specified
+    this.res._headers = {};
+    this.set(err.headers);
+
     var type = 'text';
     if (options.accepts) {
       type = options.accepts.call(this, 'html', 'text', 'json');
@@ -119,8 +123,6 @@ function onerror(app, options) {
    */
 
   function text(err) {
-    this.res._headers = {};
-
     this.body = isDev || err.expose
       ? err.message
       : http.STATUS_CODES[this.status];
