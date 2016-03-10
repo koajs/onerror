@@ -1,5 +1,10 @@
 
-1.2.1 / 2015-05-13 
+1.3.0 / 2016-03-10
+==================
+
+  * feat: support set err.headers
+
+1.2.1 / 2015-05-13
 ==================
 
   * Merge pull request #5 from koajs/fix-test-iojs
