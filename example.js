@@ -1,16 +1,13 @@
+'use strict';
 
-/**
- * Module dependencies.
- */
+const fs = require('fs');
+const koa = require('koa');
+const onerror = require('./');
+const app = koa();
 
-var fs = require('fs');
-var koa = require('koa');
-var error = require('./');
-var app = koa();
+onerror(app);
 
-error(app);
-
-app.use(function *(){
+app.use(function*() {
   // foo();
   this.body = fs.createReadStream('not exist');
 });

@@ -1,24 +1,14 @@
-/*!
- * koa-onerror - test/text.test.js
- * Copyright(c) 2014 dead_horse <dead_horse@qq.com>
- * MIT Licensed
- */
-
 'use strict';
 
-/**
- * Module dependencies.
- */
+const fs = require('fs');
+const koa = require('koa');
+const request = require('supertest');
+const onerror = require('..');
 
-var fs = require('fs');
-var koa = require('koa');
-var request = require('supertest');
-var onerror = require('..');
-
-describe('text.test.js', function () {
-  it('should common error ok', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+describe('text.test.js', function() {
+  it('should common error ok', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app);
     app.use(commonError);
 
@@ -29,9 +19,9 @@ describe('text.test.js', function () {
     .expect('foo is not defined', done);
   });
 
-  it('should show error message ok', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should show error message ok', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app);
     app.use(exposeError);
 
@@ -42,9 +32,9 @@ describe('text.test.js', function () {
     .expect('this message will be expose', done);
   });
 
-  it('should set headers from error.headers ok', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should set headers from error.headers ok', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app);
     app.use(headerError);
 
@@ -55,9 +45,9 @@ describe('text.test.js', function () {
     .expect('foo', 'bar', done);
   });
 
-  it('should stream error ok', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should stream error ok', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app);
     app.use(streamError);
 
@@ -68,14 +58,14 @@ describe('text.test.js', function () {
     .expect(/ENOENT/, done);
   });
 
-  it('should custom handler', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should custom handler', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app, {
-      text: function () {
+      text: function() {
         this.status = 500;
         this.body = 'error';
-      }
+      },
     });
     app.use(commonError);
 
@@ -88,19 +78,20 @@ describe('text.test.js', function () {
 });
 
 function* exposeError() {
-  var err = new Error('this message will be expose');
+  const err = new Error('this message will be expose');
   err.expose = true;
   throw err;
 }
 
 function* commonError() {
+  // eslint-disable-next-line
   foo();
 }
 
 function* headerError() {
-  var err = new Error('error with headers');
+  const err = new Error('error with headers');
   err.headers = {
-    foo: 'bar'
+    foo: 'bar',
   };
   throw err;
 }
