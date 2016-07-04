@@ -3,20 +3,23 @@ koa-onerror
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-[![Gittip][gittip-image]][gittip-url]
+[![Test coverage][codecov-image]][codecov-url]
 [![David deps][david-image]][david-url]
+[![Known Vulnerabilities][snyk-image]][snyk-url]
+[![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/koa-onerror.svg?style=flat
 [npm-url]: https://npmjs.org/package/koa-onerror
 [travis-image]: https://img.shields.io/travis/koajs/onerror.svg?style=flat
 [travis-url]: https://travis-ci.org/koajs/onerror
-[coveralls-image]: https://img.shields.io/coveralls/koajs/onerror.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/koajs/onerror?branch=master
-[gittip-image]: https://img.shields.io/gittip/dead_horse.svg?style=flat
-[gittip-url]: https://www.gittip.com/dead-horse/
+[codecov-image]: https://codecov.io/gh/koajs/onerror/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/koajs/onerror
 [david-image]: https://img.shields.io/david/koajs/onerror.svg?style=flat
 [david-url]: https://david-dm.org/koajs/onerror
+[snyk-image]: https://snyk.io/test/npm/koa-onerror/badge.svg?style=flat-square
+[snyk-url]: https://snyk.io/test/npm/koa-onerror
+[download-image]: https://img.shields.io/npm/dm/koa-onerror.svg?style=flat-square
+[download-url]: https://npmjs.org/package/koa-onerror
 
 an error handler for koa, hack ctx.onerror.
 
@@ -35,14 +38,15 @@ npm install koa-onerror
 ## Usage
 
 ```js
-var fs = require('fs');
-var koa = require('koa');
-var onerror = require('koa-onerror');
-var app = koa();
+const fs = require('fs');
+const koa = require('koa');
+const onerror = require('koa-onerror');
+
+const app = koa();
 
 onerror(app);
 
-app.use(function *(){
+app.use(function*(){
   // foo();
   this.body = fs.createReadStream('not exist');
 });
@@ -50,7 +54,7 @@ app.use(function *(){
 
 ## Options
 
-```
+```js
 onerror(app, options);
 ```
 
@@ -68,4 +72,5 @@ check out default handler to write your own handler.
 `koa-onerror` will automatic set `err.status` as response status code, and `err.headers` as response headers.
 
 ## License
-MIT
+
+[MIT](LICENSE)

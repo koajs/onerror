@@ -1,30 +1,15 @@
-/**!
- * koa-onerror - test/redirect.test.js
- *
- * Copyright(c) fengmk2 and other contributors.
- * MIT Licensed
- *
- * Authors:
- *   fengmk2 <fengmk2@gmail.com> (http://fengmk2.github.com)
- */
-
 'use strict';
 
-/**
- * Module dependencies.
- */
+const koa = require('koa');
+const request = require('supertest');
+const onerror = require('..');
 
-var fs = require('fs');
-var koa = require('koa');
-var request = require('supertest');
-var onerror = require('..');
-
-describe('redirect.test.js', function () {
-  it('should handle error and redirect to real error page', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+describe('redirect.test.js', function() {
+  it('should handle error and redirect to real error page', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app, {
-      redirect: 'http://example/500.html'
+      redirect: 'http://example/500.html',
     });
     app.use(commonError);
 
@@ -36,11 +21,11 @@ describe('redirect.test.js', function () {
     .expect('Location', 'http://example/500.html', done);
   });
 
-  it('should got text/plain header', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should got text/plain header', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app, {
-      redirect: 'http://example/500.html'
+      redirect: 'http://example/500.html',
     });
     app.use(commonError);
 
@@ -52,11 +37,11 @@ describe('redirect.test.js', function () {
     .expect('Location', 'http://example/500.html', done);
   });
 
-  it('should show json when accept is json', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should show json when accept is json', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app, {
-      redirect: 'http://example/500.html'
+      redirect: 'http://example/500.html',
     });
     app.use(commonError);
 
@@ -64,10 +49,11 @@ describe('redirect.test.js', function () {
     .get('/')
     .set('Accept', 'application/json')
     .expect('Content-Type', 'application/json; charset=utf-8')
-    .expect({"error":"foo is not defined"}, done);
+    .expect({'error': 'foo is not defined'}, done);
   });
 });
 
 function* commonError() {
+  // eslint-disable-next-line
   foo();
 }

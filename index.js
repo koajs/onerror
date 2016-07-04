@@ -1,35 +1,20 @@
-/*!
- * koa-onerror - index.js
- * Copyright(c) 2014 dead_horse <dead_horse@qq.com>
- * MIT Licensed
- */
-
 'use strict';
 
-/**
- * Module dependencies.
- */
+const assert = require('assert');
+const http = require('http');
+const path = require('path');
+const copy = require('copy-to');
+const fs = require('fs');
 
-var assert = require('assert');
-var http = require('http');
-var path = require('path');
-var copy = require('copy-to');
-var swig = require('swig');
-
-var env = process.env.NODE_ENV || 'development';
-var isDev = env === 'development';
-
-/**
- * Expose `onerror`
- */
+const env = process.env.NODE_ENV || 'development';
+const isDev = env === 'development';
 
 module.exports = onerror;
 
 function onerror(app, options) {
   options = options || {};
 
-  var defaultOptions = {
-    html: html,
+  const defaultOptions = {
     text: text,
     json: json,
     redirect: null,
@@ -38,13 +23,15 @@ function onerror(app, options) {
   };
 
   copy(defaultOptions).to(options);
-  var render = swig.compileFile(options.template);
+  if (!options.html) {
+    options.html = createHtmlHandler(options.template);
+  }
 
   app.context.onerror = function(err) {
     // don't do anything if there is no error.
     // this allows you to pass `this.onerror`
     // to node-style callbacks.
-    if (null == err) {
+    if (err == null) {
       return;
     }
 
@@ -62,18 +49,18 @@ function onerror(app, options) {
     }
 
     // ENOENT support
-    if ('ENOENT' === err.code) {
+    if (err.code === 'ENOENT') {
       err.status = 404;
     }
 
-    if ('number' !== typeof err.status || !http.STATUS_CODES[err.status]) {
+    if (typeof err.status !== 'number' || !http.STATUS_CODES[err.status]) {
       err.status = 500;
     }
     this.status = err.status;
 
     this.set(err.headers);
 
-    var type = 'text';
+    let type = 'text';
     if (options.accepts) {
       type = options.accepts.call(this, 'html', 'text', 'json');
     } else {
@@ -97,23 +84,7 @@ function onerror(app, options) {
     this.res.end(this.body);
   };
 
-  /**
-   * default html error handler
-   * @param {Error} err
-   */
 
-  function html(err) {
-    this.body = render({
-      env: env,
-      ctx: this,
-      request: this.request,
-      response: this.response,
-      error: err.message,
-      stack: err.stack,
-      status: this.status,
-      code: err.code
-    });
-  }
 
   /**
    * default text error handler
@@ -140,4 +111,28 @@ function onerror(app, options) {
       ? { error: err.message }
       : { error: http.STATUS_CODES[this.status] };
   }
+}
+
+function createHtmlHandler(templateFile) {
+  // lazyload
+  const nunjucks = require('nunjucks');
+  const template = nunjucks.compile(fs.readFileSync(templateFile, 'utf8'));
+
+  /**
+   * default html error handler
+   * @param {Error} err
+   */
+
+  return function html(err) {
+    this.body = template.render({
+      env: env,
+      ctx: this,
+      request: this.request,
+      response: this.response,
+      error: err.message,
+      stack: err.stack,
+      status: this.status,
+      code: err.code,
+    });
+  };
 }

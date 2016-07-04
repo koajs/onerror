@@ -1,25 +1,15 @@
-/*!
- * koa-onerror - test/json.test.js
- * Copyright(c) 2014 dead_horse <dead_horse@qq.com>
- * MIT Licensed
- */
-
 'use strict';
 
-/**
- * Module dependencies.
- */
+const should = require('should');
+const fs = require('fs');
+const onerror = require('..');
+const koa = require('koa');
+const request = require('supertest');
 
-var should = require('should');
-var fs = require('fs');
-var onerror = require('..');
-var koa = require('koa');
-var request = require('supertest');
-
-describe('json.test.js', function () {
-  it('should common error ok', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+describe('json.test.js', function() {
+  it('should common error ok', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app);
     app.use(commonError);
 
@@ -30,16 +20,16 @@ describe('json.test.js', function () {
     .expect({ error: 'foo is not defined' }, done);
   });
 
-  it('should stream error ok', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should stream error ok', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app);
     app.use(streamError);
 
     request(app.callback())
     .get('/')
     .set('Accept', 'application/json')
-    .expect(404, function (err, res) {
+    .expect(404, function(err, res) {
       should.not.exist(err);
       res.body.error.should.be.a.String;
       res.body.error.should.containEql('ENOENT');
@@ -47,16 +37,16 @@ describe('json.test.js', function () {
     });
   });
 
-  it('should custom handler', function (done) {
-    var app = koa();
-    app.on('error', function () {});
+  it('should custom handler', function(done) {
+    const app = koa();
+    app.on('error', function() {});
     onerror(app, {
-      json: function () {
+      json: function() {
         this.status = 500;
         this.body = {
-          message: 'error'
+          message: 'error',
         };
-      }
+      },
     });
     app.use(commonError);
 
@@ -69,6 +59,7 @@ describe('json.test.js', function () {
 });
 
 function* commonError() {
+  // eslint-disable-next-line
   foo();
 }
 
