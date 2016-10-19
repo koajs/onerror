@@ -1,4 +1,4 @@
-/*!
+/* !
  * koa-onerror - test/text.test.js
  * Copyright(c) 2014 dead_horse <dead_horse@qq.com>
  * MIT Licensed
@@ -10,14 +10,14 @@
  * Module dependencies.
  */
 
-var koa = require('koa');
-var assert = require('assert');
-var onerror = require('..');
+const koa = require('koa');
+const assert = require('assert');
+const onerror = require('..');
 
-describe('fluid.test.js', function () {
-  it('should return app reference', function () {
-    var app = koa();
-    var res = onerror(app);
+describe('fluid.test.js', function() {
+  it('should return app reference', function() {
+    const app = koa();
+    const res = onerror(app);
     assert(res instanceof koa);
     assert(res === app);
   });
