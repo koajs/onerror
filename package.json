@@ -11,7 +11,7 @@
   },
   "files": [
     "index.js",
-    "error.html"
+    "templates"
   ],
   "repository": {
     "type": "git",
@@ -40,10 +40,6 @@
     "pedding": "1",
     "should": "*",
     "supertest": "1"
-  },
-  "dependencies": {
-    "copy-to": "^2.0.1",
-    "nunjucks": "^2.4.2"
   },
   "engines": {
     "node": ">= 4.0.0"

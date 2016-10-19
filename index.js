@@ -2,29 +2,26 @@
 
 const http = require('http');
 const path = require('path');
-const copy = require('copy-to');
 const fs = require('fs');
 
 const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
+const templatePath = isDev
+  ? path.join(__dirname, 'templates/dev_error.html')
+  : path.join('templates/prod_error.html');
+const defaultTemplate = fs.readFileSync(templatePath, 'utf8');
 
-module.exports = onerror;
+const defaultOptions = {
+  text: text,
+  json: json,
+  html: html,
+  redirect: null,
+  template: path.join(__dirname, 'error.html'),
+  accepts: null,
+};
 
-function onerror(app, options) {
-  options = options || {};
-
-  const defaultOptions = {
-    text: text,
-    json: json,
-    redirect: null,
-    template: path.join(__dirname, 'error.html'),
-    accepts: null,
-  };
-
-  copy(defaultOptions).to(options);
-  if (!options.html) {
-    options.html = createHtmlHandler(options.template);
-  }
+module.exports = function onerror(app, options) {
+  options = Object.assign({}, defaultOptions, options);
 
   app.context.onerror = function(err) {
     // don't do anything if there is no error.
@@ -70,12 +67,12 @@ function onerror(app, options) {
     }
     type = type || 'text';
     if (options.all) {
-      options.all.call(this, err);
+      options.all.call(this, err, this);
     } else {
       if (options.redirect && type !== 'json') {
         this.redirect(options.redirect);
       } else {
-        options[type].call(this, err);
+        options[type].call(this, err, this);
         this.type = type;
       }
     }
@@ -86,57 +83,43 @@ function onerror(app, options) {
     this.res.end(this.body);
   };
 
-
-
-  /**
-   * default text error handler
-   * @param {Error} err
-   */
-
-  function text(err) {
-    // unset all headers, and set those specified
-    this.res._headers = {};
-    this.set(err.headers);
-
-    this.body = isDev || err.expose
-      ? err.message
-      : http.STATUS_CODES[this.status];
-  }
-
-  /**
-   * default json error handler
-   * @param {Error} err
-   */
-
-  function json(err) {
-    this.body = isDev || err.expose
-      ? { error: err.message }
-      : { error: http.STATUS_CODES[this.status] };
-  }
-
   return app;
+};
+
+/**
+ * default text error handler
+ * @param {Error} err
+ */
+
+function text(err) {
+  // unset all headers, and set those specified
+  this.res._headers = {};
+  this.set(err.headers);
+
+  this.body = isDev || err.expose
+    ? err.message
+    : http.STATUS_CODES[this.status];
 }
 
-function createHtmlHandler(templateFile) {
-  // lazyload
-  const nunjucks = require('nunjucks');
-  const template = nunjucks.compile(fs.readFileSync(templateFile, 'utf8'));
+/**
+ * default json error handler
+ * @param {Error} err
+ */
 
-  /**
-   * default html error handler
-   * @param {Error} err
-   */
+function json(err) {
+  this.body = isDev || err.expose
+    ? { error: err.message }
+    : { error: http.STATUS_CODES[this.status] };
+}
 
-  return function html(err) {
-    this.body = template.render({
-      env: env,
-      ctx: this,
-      request: this.request,
-      response: this.response,
-      error: err.message,
-      stack: err.stack,
-      status: this.status,
-      code: err.code,
-    });
-  };
+/**
+ * default html error handler
+ * @param {Error} err
+ */
+
+function html(err) {
+  this.body = defaultTemplate
+    .replace('{{status}}', err.status)
+    .replace('{{stack}}', err.stack);
+  this.type = 'html';
 }

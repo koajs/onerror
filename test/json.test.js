@@ -71,6 +71,26 @@ describe('json.test.js', function() {
     .expect(500)
     .expect({ error: 'non-error thrown: 1' }, done);
   });
+
+  it('should custom handler with ctx', function(done) {
+    const app = koa();
+    app.on('error', function() {});
+    onerror(app, {
+      json: (err, ctx) => {
+        ctx.status = 500;
+        ctx.body = {
+          message: 'error',
+        };
+      },
+    });
+    app.use(commonError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'application/json')
+    .expect(500)
+    .expect({ message: 'error' }, done);
+  });
 });
 
 function* commonError() {
