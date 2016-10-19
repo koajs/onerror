@@ -1,6 +1,5 @@
 'use strict';
 
-const assert = require('assert');
 const http = require('http');
 const path = require('path');
 const copy = require('copy-to');
@@ -35,7 +34,10 @@ function onerror(app, options) {
       return;
     }
 
-    assert(err instanceof Error, 'non-error thrown: ' + err);
+    // wrap non-error object
+    if (!(err instanceof Error)) {
+      err = new Error('non-error thrown: ' + err);
+    }
 
     // delegate
     this.app.emit('error', err, this);

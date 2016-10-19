@@ -56,6 +56,21 @@ describe('json.test.js', function() {
     .expect(500)
     .expect({ message: 'error' }, done);
   });
+
+  it('should wrap non-error object', function(done) {
+    const app = koa();
+    app.on('error', function() {});
+    onerror(app);
+    app.use(function*() {
+      throw 1;
+    });
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'application/json')
+    .expect(500)
+    .expect({ error: 'non-error thrown: 1' }, done);
+  });
 });
 
 function* commonError() {
