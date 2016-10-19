@@ -1,4 +1,10 @@
 
+2.1.0 / 2016-10-19
+==================
+
+  * fix: don't throw when non-error object passed (#15)
+  * Return reference to app (#7)
+
 2.0.0 / 2016-07-04
 ==================
 
