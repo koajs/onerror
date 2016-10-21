@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
 const templatePath = isDev
   ? path.join(__dirname, 'templates/dev_error.html')
-  : path.join('templates/prod_error.html');
+  : path.join(__dirname, 'templates/prod_error.html');
 const defaultTemplate = fs.readFileSync(templatePath, 'utf8');
 
 const defaultOptions = {
