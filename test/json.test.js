@@ -57,6 +57,19 @@ describe('json.test.js', function() {
     .expect({ message: 'error' }, done);
   });
 
+  it('should show status error when err.message not present', function(done) {
+    const app = koa();
+    app.on('error', function() {});
+    onerror(app);
+    app.use(emptyError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'application/json')
+    .expect(500)
+    .expect({ error: 'Internal Server Error' }, done);
+  });
+
   it('should wrap non-error object', function(done) {
     const app = koa();
     app.on('error', function() {});
@@ -92,6 +105,12 @@ describe('json.test.js', function() {
     .expect({ message: 'error' }, done);
   });
 });
+
+function* emptyError() {
+  const err = new Error('');
+  err.expose = true;
+  throw err;
+}
 
 function* commonError() {
   // eslint-disable-next-line

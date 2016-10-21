@@ -32,6 +32,19 @@ describe('text.test.js', function() {
     .expect('this message will be expose', done);
   });
 
+  it('should show status error when err.message not present', function(done) {
+    const app = koa();
+    app.on('error', function() {});
+    onerror(app);
+    app.use(emptyError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'text/plain')
+    .expect(500)
+    .expect('Internal Server Error', done);
+  });
+
   it('should set headers from error.headers ok', function(done) {
     const app = koa();
     app.on('error', function() {});
@@ -79,6 +92,12 @@ describe('text.test.js', function() {
 
 function* exposeError() {
   const err = new Error('this message will be expose');
+  err.expose = true;
+  throw err;
+}
+
+function* emptyError() {
+  const err = new Error('');
   err.expose = true;
   throw err;
 }

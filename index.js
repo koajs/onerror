@@ -96,7 +96,7 @@ function text(err) {
   this.res._headers = {};
   this.set(err.headers);
 
-  this.body = isDev || err.expose
+  this.body = (isDev || err.expose) && err.message
     ? err.message
     : http.STATUS_CODES[this.status];
 }
@@ -107,9 +107,11 @@ function text(err) {
  */
 
 function json(err) {
-  this.body = isDev || err.expose
-    ? { error: err.message }
-    : { error: http.STATUS_CODES[this.status] };
+  const message = (isDev || err.expose) && err.message
+    ? err.message
+    : http.STATUS_CODES[this.status];
+
+  this.body = { error: message };
 }
 
 /**
