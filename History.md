@@ -1,4 +1,10 @@
 
+3.0.0 / 2016-10-21
+==================
+
+  * fix: Send default text/plain body if message is undefined
+  * refactor: remove nunjucks
+
 2.1.0 / 2016-10-19
 ==================
 
