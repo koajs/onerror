@@ -23,7 +23,7 @@ koa-onerror
 
 an error handler for koa, hack ctx.onerror.
 
-different with [koa-error](https://github.com/kosjs/koa):
+different with [koa-error](https://github.com/koajs/error):
 - we can not just use try catch to handle all errors, steams' and events'
 errors are directly handle by `ctx.onerror`, so if we want to handle all
 errors in one place, the only way i can see is to hack `ctx.onerror`.
