@@ -11,7 +11,7 @@ describe('accepts.test.js', function() {
     const app = koa();
     app.on('error', function() {});
     onerror(app, {
-      accepts: function() {
+      accepts() {
         if (this.url.indexOf('.json') > 0) {
           return 'json';
         }
@@ -39,7 +39,7 @@ describe('accepts.test.js', function() {
     const app = koa();
     app.on('error', function() {});
     onerror(app, {
-      accepts: function() {
+      accepts() {
         if (this.url.indexOf('.json') > 0) {
           return 'json';
         }

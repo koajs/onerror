@@ -75,7 +75,7 @@ describe('text.test.js', function() {
     const app = koa();
     app.on('error', function() {});
     onerror(app, {
-      text: function() {
+      text() {
         this.status = 500;
         this.body = 'error';
       },
