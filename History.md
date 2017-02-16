@@ -1,4 +1,10 @@
 
+3.0.2 / 2017-02-16
+==================
+
+  * fix: try to restore non Error instance properties (#20)
+  * fix: change the koa-error url (#17)
+
 3.0.1 / 2016-10-21
 ==================
 
