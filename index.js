@@ -12,9 +12,9 @@ const templatePath = isDev
 const defaultTemplate = fs.readFileSync(templatePath, 'utf8');
 
 const defaultOptions = {
-  text: text,
-  json: json,
-  html: html,
+  text,
+  json,
+  html,
   redirect: null,
   template: path.join(__dirname, 'error.html'),
   accepts: null,
@@ -33,7 +33,14 @@ module.exports = function onerror(app, options) {
 
     // wrap non-error object
     if (!(err instanceof Error)) {
-      err = new Error('non-error thrown: ' + err);
+      const newError = new Error('non-error thrown: ' + err);
+      // err maybe an object, try to copy the name, message and stack to the new error instance
+      if (err) {
+        if (err.name) newError.name = err.name;
+        if (err.message) newError.message = err.message;
+        if (err.stack) newError.stack = err.stack;
+      }
+      err = newError;
     }
 
     // delegate

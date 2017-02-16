@@ -2,9 +2,10 @@
 
 const should = require('should');
 const fs = require('fs');
-const onerror = require('..');
 const koa = require('koa');
 const request = require('supertest');
+const pedding = require('pedding');
+const onerror = require('..');
 
 describe('json.test.js', function() {
   it('should common error ok', function(done) {
@@ -41,7 +42,7 @@ describe('json.test.js', function() {
     const app = koa();
     app.on('error', function() {});
     onerror(app, {
-      json: function() {
+      json() {
         this.status = 500;
         this.body = {
           message: 'error',
@@ -74,7 +75,7 @@ describe('json.test.js', function() {
     const app = koa();
     app.on('error', function() {});
     onerror(app);
-    app.use(function*() {
+    app.use(function* () {
       throw 1;
     });
 
@@ -83,6 +84,33 @@ describe('json.test.js', function() {
     .set('Accept', 'application/json')
     .expect(500)
     .expect({ error: 'non-error thrown: 1' }, done);
+  });
+
+  it('should wrap mock error obj instead of Error instance', function(done) {
+    done = pedding(2, done);
+    const app = koa();
+    app.on('error', function(err) {
+      err.should.be.an.Error;
+      err.name.should.equal('TypeError');
+      err.message.should.equal('mock error');
+      err.stack.should.containEql('json.test.js');
+      done();
+    });
+    onerror(app);
+    app.use(function* () {
+      const err = {
+        name: 'TypeError',
+        message: 'mock error',
+        stack: new Error().stack,
+      };
+      throw err;
+    });
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'application/json')
+    .expect(500)
+    .expect({ error: 'mock error' }, done);
   });
 
   it('should custom handler with ctx', function(done) {

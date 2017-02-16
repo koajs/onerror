@@ -49,7 +49,7 @@ describe('redirect.test.js', function() {
     .get('/')
     .set('Accept', 'application/json')
     .expect('Content-Type', 'application/json; charset=utf-8')
-    .expect({'error': 'foo is not defined'}, done);
+    .expect({ error: 'foo is not defined' }, done);
   });
 });
 

@@ -7,7 +7,7 @@ const app = koa();
 
 onerror(app);
 
-app.use(function*() {
+app.use(function* () {
   // foo();
   this.body = fs.createReadStream('not exist');
 });

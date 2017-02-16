@@ -3,7 +3,7 @@
 const fs = require('fs');
 const koa = require('koa');
 const request = require('supertest');
-const sleep = require('co-sleep');
+const sleep = require('ko-sleep');
 const onerror = require('..');
 
 describe('html.test.js', function() {

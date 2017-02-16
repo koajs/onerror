@@ -30,10 +30,10 @@
   "homepage": "https://github.com/koajs/onerror",
   "devDependencies": {
     "autod": "*",
-    "co-sleep": "*",
+    "ko-sleep": "*",
     "egg-ci": "1",
-    "eslint": "2",
-    "eslint-config-egg": "2",
+    "eslint": "3",
+    "eslint-config-egg": "3",
     "istanbul": "*",
     "koa": "1",
     "mocha": "*",
@@ -45,6 +45,6 @@
     "node": ">= 4.0.0"
   },
   "ci": {
-    "version": "4, 6"
+    "version": "4, 6, 7"
   }
 }
