@@ -38,8 +38,7 @@
     "koa": "1",
     "mocha": "*",
     "pedding": "1",
-    "should": "*",
-    "supertest": "1"
+    "supertest": "3"
   },
   "engines": {
     "node": ">= 4.0.0"
