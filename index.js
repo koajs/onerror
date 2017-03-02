@@ -43,16 +43,16 @@ module.exports = function onerror(app, options) {
       err = newError;
     }
 
+    const headerSent = this.headerSent || !this.writable;
+    if (headerSent) err.headerSent = true;
+
     // delegate
     this.app.emit('error', err, this);
 
     // nothing we can do here other
     // than delegate to the app-level
     // handler and log.
-    if (this.headerSent || !this.writable) {
-      err.headerSent = true;
-      return;
-    }
+    if (headerSent) return;
 
     // ENOENT support
     if (err.code === 'ENOENT') {
