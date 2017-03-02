@@ -1,16 +1,16 @@
 'use strict';
 
-const should = require('should');
+const assert = require('assert');
 const fs = require('fs');
 const koa = require('koa');
 const request = require('supertest');
 const pedding = require('pedding');
 const onerror = require('..');
 
-describe('json.test.js', function() {
-  it('should common error ok', function(done) {
+describe('json.test.js', () => {
+  it('should common error ok', done => {
     const app = koa();
-    app.on('error', function() {});
+    app.on('error', () => {});
     onerror(app);
     app.use(commonError);
 
@@ -21,26 +21,26 @@ describe('json.test.js', function() {
     .expect({ error: 'foo is not defined' }, done);
   });
 
-  it('should stream error ok', function(done) {
+  it('should stream error ok', done => {
     const app = koa();
-    app.on('error', function() {});
+    app.on('error', () => {});
     onerror(app);
     app.use(streamError);
 
     request(app.callback())
     .get('/')
     .set('Accept', 'application/json')
-    .expect(404, function(err, res) {
-      should.not.exist(err);
-      res.body.error.should.be.a.String;
-      res.body.error.should.containEql('ENOENT');
+    .expect(404, (err, res) => {
+      assert(!err);
+      assert(typeof res.body.error === 'string');
+      assert(res.body.error.match(/ENOENT/));
       done();
     });
   });
 
-  it('should custom handler', function(done) {
+  it('should custom handler', done => {
     const app = koa();
-    app.on('error', function() {});
+    app.on('error', () => {});
     onerror(app, {
       json() {
         this.status = 500;
@@ -58,9 +58,9 @@ describe('json.test.js', function() {
     .expect({ message: 'error' }, done);
   });
 
-  it('should show status error when err.message not present', function(done) {
+  it('should show status error when err.message not present', done => {
     const app = koa();
-    app.on('error', function() {});
+    app.on('error', () => {});
     onerror(app);
     app.use(emptyError);
 
@@ -71,9 +71,9 @@ describe('json.test.js', function() {
     .expect({ error: 'Internal Server Error' }, done);
   });
 
-  it('should wrap non-error object', function(done) {
+  it('should wrap non-error object', done => {
     const app = koa();
-    app.on('error', function() {});
+    app.on('error', () => {});
     onerror(app);
     app.use(function* () {
       throw 1;
@@ -86,14 +86,14 @@ describe('json.test.js', function() {
     .expect({ error: 'non-error thrown: 1' }, done);
   });
 
-  it('should wrap mock error obj instead of Error instance', function(done) {
+  it('should wrap mock error obj instead of Error instance', done => {
     done = pedding(2, done);
     const app = koa();
-    app.on('error', function(err) {
-      err.should.be.an.Error;
-      err.name.should.equal('TypeError');
-      err.message.should.equal('mock error');
-      err.stack.should.containEql('json.test.js');
+    app.on('error', err => {
+      assert(err instanceof Error);
+      assert(err.name === 'TypeError');
+      assert(err.message === 'mock error');
+      assert(err.stack.match(/json\.test\.js/));
       done();
     });
     onerror(app);
@@ -116,9 +116,9 @@ describe('json.test.js', function() {
     .expect({ error: 'mock error' }, done);
   });
 
-  it('should custom handler with ctx', function(done) {
+  it('should custom handler with ctx', done => {
     const app = koa();
-    app.on('error', function() {});
+    app.on('error', () => {});
     onerror(app, {
       json: (err, ctx) => {
         ctx.status = 500;
@@ -128,6 +128,33 @@ describe('json.test.js', function() {
       },
     });
     app.use(commonError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'application/json')
+    .expect(500)
+    .expect({ message: 'error' }, done);
+  });
+
+  it('should get headerSent in error listener', done => {
+    const app = koa();
+    app.on('error', err => {
+      assert(err.headerSent);
+      done();
+    });
+    onerror(app, {
+      json: (err, ctx) => {
+        ctx.status = 500;
+        ctx.body = {
+          message: 'error',
+        };
+      },
+    });
+
+    app.use(function* () {
+      this.res.flushHeaders();
+      throw new Error('mock error');
+    });
 
     request(app.callback())
     .get('/')
