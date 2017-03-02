@@ -39,6 +39,8 @@ module.exports = function onerror(app, options) {
         if (err.name) newError.name = err.name;
         if (err.message) newError.message = err.message;
         if (err.stack) newError.stack = err.stack;
+        if (err.status) newError.status = err.status;
+        if (err.headers) newError.headers = err.headers;
       }
       err = newError;
     }

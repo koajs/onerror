@@ -102,6 +102,8 @@ describe('json.test.js', function() {
         name: 'TypeError',
         message: 'mock error',
         stack: new Error().stack,
+        status: 404,
+        headers: { foo: 'bar' },
       };
       throw err;
     });
@@ -109,7 +111,8 @@ describe('json.test.js', function() {
     request(app.callback())
     .get('/')
     .set('Accept', 'application/json')
-    .expect(500)
+    .expect(404)
+    .expect('foo', 'bar')
     .expect({ error: 'mock error' }, done);
   });
 
