@@ -1,4 +1,10 @@
 
+3.1.0 / 2017-03-02
+==================
+
+  * feat: can reach err.headerSent in app error listener (#23)
+  * feat: non-error wrapper support status and headers (#22)
+
 3.0.2 / 2017-02-16
 ==================
 
