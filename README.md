@@ -42,13 +42,13 @@ const fs = require('fs');
 const koa = require('koa');
 const onerror = require('koa-onerror');
 
-const app = koa();
+const app = new koa();
 
 onerror(app);
 
-app.use(function*(){
+app.use(ctx => {
   // foo();
-  this.body = fs.createReadStream('not exist');
+  ctx.body = fs.createReadStream('not exist');
 });
 ```
 

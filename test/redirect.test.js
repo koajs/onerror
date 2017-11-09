@@ -6,7 +6,7 @@ const onerror = require('..');
 
 describe('redirect.test.js', function() {
   it('should handle error and redirect to real error page', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app, {
       redirect: 'http://example/500.html',
@@ -22,7 +22,7 @@ describe('redirect.test.js', function() {
   });
 
   it('should got text/plain header', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app, {
       redirect: 'http://example/500.html',
@@ -38,7 +38,7 @@ describe('redirect.test.js', function() {
   });
 
   it('should show json when accept is json', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app, {
       redirect: 'http://example/500.html',
@@ -53,7 +53,7 @@ describe('redirect.test.js', function() {
   });
 });
 
-function* commonError() {
+function commonError() {
   // eslint-disable-next-line
   foo();
 }

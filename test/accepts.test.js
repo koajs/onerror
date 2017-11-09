@@ -8,7 +8,7 @@ const onerror = require('..');
 describe('accepts.test.js', function() {
   it('should return json response', function(done) {
     done = pedding(2, done);
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app, {
       accepts() {
@@ -36,7 +36,7 @@ describe('accepts.test.js', function() {
   });
 
   it('should redrect when accepts type not json', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app, {
       accepts() {
@@ -59,7 +59,7 @@ describe('accepts.test.js', function() {
   });
 });
 
-function* commonError() {
+function commonError() {
   // eslint-disable-next-line
   foo();
 }
