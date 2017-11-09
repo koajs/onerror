@@ -7,7 +7,7 @@ const onerror = require('..');
 
 describe('text.test.js', function() {
   it('should common error ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(commonError);
@@ -20,7 +20,7 @@ describe('text.test.js', function() {
   });
 
   it('should show error message ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(exposeError);
@@ -33,7 +33,7 @@ describe('text.test.js', function() {
   });
 
   it('should show status error when err.message not present', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(emptyError);
@@ -46,7 +46,7 @@ describe('text.test.js', function() {
   });
 
   it('should set headers from error.headers ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(headerError);
@@ -59,7 +59,7 @@ describe('text.test.js', function() {
   });
 
   it('should stream error ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(streamError);
@@ -72,7 +72,7 @@ describe('text.test.js', function() {
   });
 
   it('should custom handler', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app, {
       text() {
@@ -90,24 +90,24 @@ describe('text.test.js', function() {
   });
 });
 
-function* exposeError() {
+function exposeError() {
   const err = new Error('this message will be expose');
   err.expose = true;
   throw err;
 }
 
-function* emptyError() {
+function emptyError() {
   const err = new Error('');
   err.expose = true;
   throw err;
 }
 
-function* commonError() {
+function commonError() {
   // eslint-disable-next-line
   foo();
 }
 
-function* headerError() {
+function headerError() {
   const err = new Error('error with headers');
   err.headers = {
     foo: 'bar',
@@ -115,6 +115,6 @@ function* headerError() {
   throw err;
 }
 
-function* streamError() {
-  this.body = fs.createReadStream('not exist');
+function streamError(ctx) {
+  ctx.body = fs.createReadStream('not exist');
 }

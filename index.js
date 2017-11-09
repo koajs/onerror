@@ -27,9 +27,7 @@ module.exports = function onerror(app, options) {
     // don't do anything if there is no error.
     // this allows you to pass `this.onerror`
     // to node-style callbacks.
-    if (err == null) {
-      return;
-    }
+    if (err == null) return;
 
     // wrap non-error object
     if (!(err instanceof Error)) {
@@ -57,9 +55,7 @@ module.exports = function onerror(app, options) {
     if (headerSent) return;
 
     // ENOENT support
-    if (err.code === 'ENOENT') {
-      err.status = 404;
-    }
+    if (err.code === 'ENOENT') err.status = 404;
 
     if (typeof err.status !== 'number' || !http.STATUS_CODES[err.status]) {
       err.status = 500;
@@ -67,7 +63,6 @@ module.exports = function onerror(app, options) {
     this.status = err.status;
 
     this.set(err.headers);
-
     let type = 'text';
     if (options.accepts) {
       type = options.accepts.call(this, 'html', 'text', 'json');
@@ -100,12 +95,12 @@ module.exports = function onerror(app, options) {
  * @param {Error} err
  */
 
-function text(err) {
+function text(err, ctx) {
   // unset all headers, and set those specified
-  this.res._headers = {};
-  this.set(err.headers);
+  ctx.res._headers = {};
+  ctx.set(err.headers);
 
-  this.body = (isDev || err.expose) && err.message
+  ctx.body = (isDev || err.expose) && err.message
     ? err.message
     : http.STATUS_CODES[this.status];
 }
@@ -115,12 +110,12 @@ function text(err) {
  * @param {Error} err
  */
 
-function json(err) {
+function json(err, ctx) {
   const message = (isDev || err.expose) && err.message
     ? err.message
     : http.STATUS_CODES[this.status];
 
-  this.body = { error: message };
+  ctx.body = { error: message };
 }
 
 /**
@@ -128,9 +123,9 @@ function json(err) {
  * @param {Error} err
  */
 
-function html(err) {
-  this.body = defaultTemplate
+function html(err, ctx) {
+  ctx.body = defaultTemplate
     .replace('{{status}}', err.status)
     .replace('{{stack}}', err.stack);
-  this.type = 'html';
+  ctx.type = 'html';
 }

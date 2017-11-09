@@ -16,7 +16,7 @@ const onerror = require('..');
 
 describe('fluid.test.js', function() {
   it('should return app reference', function() {
-    const app = koa();
+    const app = new koa();
     const res = onerror(app);
     assert(res instanceof koa);
     assert(res === app);

@@ -4,8 +4,8 @@
   "description": "koa error handler, hack ctx.onerror",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.test.js",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- test/*.test.js",
+    "test": "NODE_ENV=development egg-bin test",
+    "test-cov": "NODE_ENV=development egg-bin cov",
     "ci": "npm run lint && npm run test-cov",
     "lint": "eslint test *.js --fix"
   },
@@ -30,20 +30,19 @@
   "homepage": "https://github.com/koajs/onerror",
   "devDependencies": {
     "autod": "*",
-    "ko-sleep": "*",
+    "egg-bin": "^4.3.5",
     "egg-ci": "1",
-    "eslint": "3",
-    "eslint-config-egg": "3",
-    "istanbul": "*",
-    "koa": "1",
-    "mocha": "*",
+    "eslint": "4",
+    "eslint-config-egg": "5",
+    "ko-sleep": "*",
+    "koa": "2",
     "pedding": "1",
     "supertest": "3"
   },
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 8.0.0"
   },
   "ci": {
-    "version": "4, 6, 7"
+    "version": "8, 9"
   }
 }

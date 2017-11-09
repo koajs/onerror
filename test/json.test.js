@@ -9,7 +9,7 @@ const onerror = require('..');
 
 describe('json.test.js', () => {
   it('should common error ok', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', () => {});
     onerror(app);
     app.use(commonError);
@@ -22,7 +22,7 @@ describe('json.test.js', () => {
   });
 
   it('should stream error ok', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', () => {});
     onerror(app);
     app.use(streamError);
@@ -39,7 +39,7 @@ describe('json.test.js', () => {
   });
 
   it('should custom handler', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', () => {});
     onerror(app, {
       json() {
@@ -59,7 +59,7 @@ describe('json.test.js', () => {
   });
 
   it('should show status error when err.message not present', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', () => {});
     onerror(app);
     app.use(emptyError);
@@ -72,10 +72,10 @@ describe('json.test.js', () => {
   });
 
   it('should wrap non-error object', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', () => {});
     onerror(app);
-    app.use(function* () {
+    app.use(() => {
       throw 1;
     });
 
@@ -88,7 +88,7 @@ describe('json.test.js', () => {
 
   it('should wrap mock error obj instead of Error instance', done => {
     done = pedding(2, done);
-    const app = koa();
+    const app = new koa();
     app.on('error', err => {
       assert(err instanceof Error);
       assert(err.name === 'TypeError');
@@ -97,7 +97,7 @@ describe('json.test.js', () => {
       done();
     });
     onerror(app);
-    app.use(function* () {
+    app.use(() => {
       const err = {
         name: 'TypeError',
         message: 'mock error',
@@ -117,7 +117,7 @@ describe('json.test.js', () => {
   });
 
   it('should custom handler with ctx', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', () => {});
     onerror(app, {
       json: (err, ctx) => {
@@ -137,7 +137,7 @@ describe('json.test.js', () => {
   });
 
   it('should get headerSent in error listener', done => {
-    const app = koa();
+    const app = new koa();
     app.on('error', err => {
       assert(err.headerSent);
       done();
@@ -151,8 +151,8 @@ describe('json.test.js', () => {
       },
     });
 
-    app.use(function* () {
-      this.res.flushHeaders();
+    app.use(ctx => {
+      ctx.res.flushHeaders();
       throw new Error('mock error');
     });
 
@@ -164,17 +164,17 @@ describe('json.test.js', () => {
   });
 });
 
-function* emptyError() {
+function emptyError() {
   const err = new Error('');
   err.expose = true;
   throw err;
 }
 
-function* commonError() {
+function commonError() {
   // eslint-disable-next-line
   foo();
 }
 
-function* streamError() {
-  this.body = fs.createReadStream('not exist');
+function streamError(ctx) {
+  ctx.body = fs.createReadStream('not exist');
 }

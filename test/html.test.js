@@ -8,7 +8,7 @@ const onerror = require('..');
 
 describe('html.test.js', function() {
   it('should common error ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(commonError);
@@ -20,7 +20,7 @@ describe('html.test.js', function() {
   });
 
   it('should common error after sleep a little while ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(commonSleepError);
@@ -32,7 +32,7 @@ describe('html.test.js', function() {
   });
 
   it('should stream error ok', function(done) {
-    const app = koa();
+    const app = new koa();
     app.on('error', function() {});
     onerror(app);
     app.use(streamError);
@@ -45,17 +45,17 @@ describe('html.test.js', function() {
   });
 });
 
-function* commonError() {
+function commonError() {
   // eslint-disable-next-line
   foo();
 }
 
-function* commonSleepError() {
-  yield sleep(50);
+async function commonSleepError() {
+  await sleep(50);
   // eslint-disable-next-line
   fooAfterSleep();
 }
 
-function* streamError() {
-  this.body = fs.createReadStream('not exist');
+function streamError(ctx) {
+  ctx.body = fs.createReadStream('not exist');
 }
