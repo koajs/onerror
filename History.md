@@ -1,4 +1,10 @@
 
+4.0.0 / 2017-11-09
+==================
+
+**others**
+  * [[`df878e4`](http://github.com/koajs/onerror/commit/df878e4605c91aa55489a249c4093642f16ce96b)] - refactor: support koa 2 (#27) (Yiyu He <<dead_horse@qq.com>>)
+
 3.1.0 / 2017-03-02
 ==================
 
