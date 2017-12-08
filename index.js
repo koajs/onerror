@@ -118,6 +118,14 @@ function json(err, ctx) {
   ctx.body = { error: message };
 }
 
+function htmlSafe(str) {
+  return String(str).replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+}
+
 /**
  * default html error handler
  * @param {Error} err
@@ -125,7 +133,7 @@ function json(err, ctx) {
 
 function html(err, ctx) {
   ctx.body = defaultTemplate
-    .replace('{{status}}', err.status)
-    .replace('{{stack}}', err.stack);
+    .replace('{{status}}', htmlSafe(err.status))
+    .replace('{{stack}}', htmlSafe(err.stack));
   ctx.type = 'html';
 }

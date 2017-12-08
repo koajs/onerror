@@ -43,6 +43,19 @@ describe('html.test.js', function() {
     .expect(/<p>Looks like something broke!<\/p>/)
     .expect(/ENOENT/, done);
   });
+
+  it('should unsafe error ok', function(done) {
+    const app = new koa();
+    app.on('error', function() {});
+    onerror(app);
+    app.use(unsafeError);
+
+    request(app.callback())
+    .get('/')
+    .set('Accept', 'text/html')
+    .expect(/<p>Looks like something broke!<\/p>/)
+    .expect(/&lt;anonymous&gt;/, done);
+  });
 });
 
 function commonError() {
@@ -58,4 +71,8 @@ async function commonSleepError() {
 
 function streamError(ctx) {
   ctx.body = fs.createReadStream('not exist');
+}
+
+function unsafeError() {
+  throw new Error('<anonymous>');
 }
