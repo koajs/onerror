@@ -44,5 +44,8 @@
   },
   "ci": {
     "version": "8, 9"
+  },
+  "dependencies": {
+    "escape-html": "^1.0.3"
   }
 }

@@ -3,6 +3,7 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const escapeHtml = require('escape-html');
 
 const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
@@ -125,7 +126,7 @@ function json(err, ctx) {
 
 function html(err, ctx) {
   ctx.body = defaultTemplate
-    .replace('{{status}}', err.status)
-    .replace('{{stack}}', err.stack);
+    .replace('{{status}}', escapeHtml(err.status))
+    .replace('{{stack}}', escapeHtml(err.stack));
   ctx.type = 'html';
 }
