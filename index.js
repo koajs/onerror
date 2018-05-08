@@ -126,6 +126,7 @@ function json(err, ctx) {
 function html(err, ctx) {
   ctx.body = defaultTemplate
     .replace('{{status}}', err.status)
+    .replace('{{message}}', err.message)
     .replace('{{stack}}', err.stack);
   ctx.type = 'html';
 }
