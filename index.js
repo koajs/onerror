@@ -31,7 +31,7 @@ module.exports = function onerror(app, options) {
 
     // wrap non-error object
     if (!(err instanceof Error)) {
-      const newError = new Error('non-error thrown: ' + err);
+      const newError = new Error('non-error thrown: ' + JSON.stringify(err));
       // err maybe an object, try to copy the name, message and stack to the new error instance
       if (err) {
         if (err.name) newError.name = err.name;
