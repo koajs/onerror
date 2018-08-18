@@ -1,4 +1,10 @@
 
+4.0.1 / 2018-08-19
+==================
+
+**fixes**
+  * [[`46a79dd`](http://github.com/koajs/onerror/commit/46a79ddcf81434dd2974ed7906f67ca4674dbf52)] - fix: escape unsafe characters in html response (Simon Ratner <<simon+github@probablyprime.net>>)
+
 4.0.0 / 2017-11-09
 ==================
 
