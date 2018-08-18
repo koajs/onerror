@@ -47,7 +47,7 @@ describe('multipart.test.js', () => {
         assert(response.keepAliveSocket === true);
       }
       assert(response.status === 500);
-      assert(data.toString().includes('Cannot read property \'error\' of undefined'));
+      assert(data.toString().includes('Cannot read property &#39;error&#39; of undefined'));
       // wait for the request data is consumed by onerror
       await sleep(200);
     }
