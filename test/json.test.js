@@ -15,10 +15,10 @@ describe('json.test.js', () => {
     app.use(commonError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect({ error: 'foo is not defined' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ error: 'foo is not defined' }, done);
   });
 
   it('should stream error ok', done => {
@@ -28,14 +28,14 @@ describe('json.test.js', () => {
     app.use(streamError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(404, (err, res) => {
-      assert(!err);
-      assert(typeof res.body.error === 'string');
-      assert(res.body.error.match(/ENOENT/));
-      done();
-    });
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(404, (err, res) => {
+        assert(!err);
+        assert(typeof res.body.error === 'string');
+        assert(res.body.error.match(/ENOENT/));
+        done();
+      });
   });
 
   it('should custom handler', done => {
@@ -52,10 +52,10 @@ describe('json.test.js', () => {
     app.use(commonError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect({ message: 'error' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ message: 'error' }, done);
   });
 
   it('should show status error when err.message not present', done => {
@@ -65,10 +65,10 @@ describe('json.test.js', () => {
     app.use(emptyError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect({ error: 'Internal Server Error' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ error: 'Internal Server Error' }, done);
   });
 
   it('should wrap non-error object', done => {
@@ -80,10 +80,10 @@ describe('json.test.js', () => {
     });
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect({ error: 'non-error thrown: 1' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ error: 'non-error thrown: 1' }, done);
   });
 
   it('should wrap mock error obj instead of Error instance', done => {
@@ -109,11 +109,11 @@ describe('json.test.js', () => {
     });
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(404)
-    .expect('foo', 'bar')
-    .expect({ error: 'mock error' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(404)
+      .expect('foo', 'bar')
+      .expect({ error: 'mock error' }, done);
   });
 
   it('should custom handler with ctx', done => {
@@ -130,10 +130,10 @@ describe('json.test.js', () => {
     app.use(commonError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect({ message: 'error' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ message: 'error' }, done);
   });
 
   it('should get headerSent in error listener', done => {
@@ -157,10 +157,10 @@ describe('json.test.js', () => {
     });
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect({ message: 'error' }, done);
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ message: 'error' }, done);
   });
 });
 

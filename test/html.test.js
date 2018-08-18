@@ -3,7 +3,7 @@
 const fs = require('fs');
 const koa = require('koa');
 const request = require('supertest');
-const sleep = require('ko-sleep');
+const sleep = require('mz-modules/sleep');
 const onerror = require('..');
 
 describe('html.test.js', function() {
@@ -14,9 +14,9 @@ describe('html.test.js', function() {
     app.use(commonError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'text/html')
-    .expect(/<p>Looks like something broke!<\/p>/, done);
+      .get('/')
+      .set('Accept', 'text/html')
+      .expect(/<p>Looks like something broke!<\/p>/, done);
   });
 
   it('should common error after sleep a little while ok', function(done) {
@@ -26,9 +26,9 @@ describe('html.test.js', function() {
     app.use(commonSleepError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'text/html')
-    .expect(/<p>Looks like something broke!<\/p>/, done);
+      .get('/')
+      .set('Accept', 'text/html')
+      .expect(/<p>Looks like something broke!<\/p>/, done);
   });
 
   it('should stream error ok', function(done) {
@@ -38,10 +38,10 @@ describe('html.test.js', function() {
     app.use(streamError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'text/html')
-    .expect(/<p>Looks like something broke!<\/p>/)
-    .expect(/ENOENT/, done);
+      .get('/')
+      .set('Accept', 'text/html')
+      .expect(/<p>Looks like something broke!<\/p>/)
+      .expect(/ENOENT/, done);
   });
 
   it('should unsafe error ok', function(done) {
@@ -51,10 +51,10 @@ describe('html.test.js', function() {
     app.use(unsafeError);
 
     request(app.callback())
-    .get('/')
-    .set('Accept', 'text/html')
-    .expect(/<p>Looks like something broke!<\/p>/)
-    .expect(/&lt;anonymous&gt;/, done);
+      .get('/')
+      .set('Accept', 'text/html')
+      .expect(/<p>Looks like something broke!<\/p>/)
+      .expect(/&lt;anonymous&gt;/, done);
   });
 });
 
