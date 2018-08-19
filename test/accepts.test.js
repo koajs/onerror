@@ -21,18 +21,18 @@ describe('accepts.test.js', function() {
     app.use(commonError);
 
     request(app.callback())
-    .get('/user.json')
-    .set('Accept', '*/*')
-    .expect(500)
-    .expect('Content-Type', 'application/json; charset=utf-8')
-    .expect({ error: 'foo is not defined' }, done);
+      .get('/user.json')
+      .set('Accept', '*/*')
+      .expect(500)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect({ error: 'foo is not defined' }, done);
 
     request(app.callback())
-    .get('/user')
-    .set('Accept', 'application/json')
-    .expect(500)
-    .expect('Content-Type', 'text/plain; charset=utf-8')
-    .expect('foo is not defined', done);
+      .get('/user')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect('Content-Type', 'text/plain; charset=utf-8')
+      .expect('foo is not defined', done);
   });
 
   it('should redrect when accepts type not json', function(done) {
@@ -50,12 +50,12 @@ describe('accepts.test.js', function() {
     app.use(commonError);
 
     request(app.callback())
-    .get('/user')
-    .set('Accept', '*/*')
-    .expect('Content-Type', 'text/html; charset=utf-8')
-    .expect('Location', 'http://foo.com/500.html')
-    .expect('Redirecting to <a href="http://foo.com/500.html">http://foo.com/500.html</a>.')
-    .expect(302, done);
+      .get('/user')
+      .set('Accept', '*/*')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect('Location', 'http://foo.com/500.html')
+      .expect('Redirecting to <a href="http://foo.com/500.html">http://foo.com/500.html</a>.')
+      .expect(302, done);
   });
 });
 

@@ -30,22 +30,26 @@
   "homepage": "https://github.com/koajs/onerror",
   "devDependencies": {
     "autod": "*",
+    "co-busboy": "^1.4.0",
     "egg-bin": "^4.3.5",
     "egg-ci": "1",
     "eslint": "4",
     "eslint-config-egg": "5",
-    "ko-sleep": "*",
+    "formstream": "^1.1.0",
     "koa": "2",
+    "mz-modules": "^2.1.0",
     "pedding": "1",
-    "supertest": "3"
+    "supertest": "3",
+    "urllib": "^2.29.1"
   },
   "engines": {
     "node": ">= 8.0.0"
   },
   "ci": {
-    "version": "8, 9"
+    "version": "8, 10"
   },
   "dependencies": {
-    "escape-html": "^1.0.3"
+    "escape-html": "^1.0.3",
+    "stream-wormhole": "^1.1.0"
   }
 }

@@ -4,6 +4,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const escapeHtml = require('escape-html');
+const sendToWormhole = require('stream-wormhole');
 
 const env = process.env.NODE_ENV || 'development';
 const isDev = env === 'development';
@@ -29,6 +30,9 @@ module.exports = function onerror(app, options) {
     // this allows you to pass `this.onerror`
     // to node-style callbacks.
     if (err == null) return;
+
+    // ignore all pedding request stream
+    if (this.req) sendToWormhole(this.req);
 
     // wrap non-error object
     if (!(err instanceof Error)) {
