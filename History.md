@@ -1,4 +1,10 @@
 
+4.1.0 / 2018-08-19
+==================
+
+**fixes**
+  * [[`d4291c2`](http://github.com/koajs/onerror/commit/d4291c29319dee23d745bb7f7a37ca1e86741691)] - fix: the req data should be consumed on error (#33) (fengmk2 <<fengmk2@gmail.com>>)
+
 4.0.1 / 2018-08-19
 ==================
 
