@@ -31,19 +31,19 @@ module.exports = function onerror(app, options) {
     // to node-style callbacks.
     if (err == null) return;
 
-    // ignore all pedding request stream
+    // ignore all pending request stream
     if (this.req) sendToWormhole(this.req);
 
     // wrap non-error object
     if (!(err instanceof Error)) {
       const newError = new Error('non-error thrown: ' + err);
       // err maybe an object, try to copy the name, message and stack to the new error instance
-      if (err) {
-        if (err.name) newError.name = err.name;
-        if (err.message) newError.message = err.message;
-        if (err.stack) newError.stack = err.stack;
-        if (err.status) newError.status = err.status;
-        if (err.headers) newError.headers = err.headers;
+      if (err && typeof err === 'object') {
+        for (const key in err) {
+          if (err.hasOwnProperty(key)) {
+            newError[key] = err[key];
+          }
+        }
       }
       err = newError;
     }
