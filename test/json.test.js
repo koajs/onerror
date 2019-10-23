@@ -86,6 +86,26 @@ describe('json.test.js', () => {
       .expect({ error: 'non-error thrown: 1' }, done);
   });
 
+  it('should wrap non-error object and reveal all its fields', done => {
+    const app = new koa();
+    app.on('error', () => {
+    });
+    onerror(app, {
+      json: (err, ctx) => {
+        ctx.body = { error: err };
+      },
+    });
+    app.use(() => {
+      throw { code: 2, details: 'grpc upstream error' };
+    });
+
+    request(app.callback())
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ error: { code: 2, details: 'grpc upstream error', status: 500 } }, done);
+  });
+
   it('should wrap mock error obj instead of Error instance', done => {
     done = pedding(2, done);
     const app = new koa();
