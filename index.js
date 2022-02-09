@@ -36,7 +36,14 @@ module.exports = function onerror(app, options) {
 
     // wrap non-error object
     if (!(err instanceof Error)) {
-      const newError = new Error('non-error thrown: ' + err);
+      let errMsg = err;
+      if (typeof err === 'object') {
+        try {
+          errMsg = JSON.stringify(err);
+          // eslint-disable-next-line no-empty
+        } catch (e) {}
+      }
+      const newError = new Error('non-error thrown: ' + errMsg);
       // err maybe an object, try to copy the name, message and stack to the new error instance
       if (err) {
         if (err.name) newError.name = err.name;
