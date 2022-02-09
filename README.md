@@ -73,3 +73,7 @@ check out default handler to write your own handler.
 ## License
 
 [MIT](LICENSE)
+
+## Contributors
+
+[![](https://ergatejs.implements.io/badges/contributors/koajs/onerror.svg?size=96)](https://github.com/koajs/onerror/graphs/contributors)

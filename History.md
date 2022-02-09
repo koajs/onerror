@@ -1,4 +1,10 @@
 
+4.2.0 / 2022-02-09
+==================
+
+**features**
+  * [[`9a899f5`](http://github.com/koajs/onerror/commit/9a899f58f65a2964cbf4f99793887623b4e01c5e)] - feat: stringify err object on non-error (#36) (弘树@阿里 <<dickeylth@users.noreply.github.com>>)
+
 4.1.0 / 2018-08-19
 ==================
 
