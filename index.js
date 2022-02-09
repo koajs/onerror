@@ -40,6 +40,7 @@ module.exports = function onerror(app, options) {
       if (typeof err === 'object') {
         try {
           errMsg = JSON.stringify(err);
+          // eslint-disable-next-line no-empty
         } catch (e) {}
       }
       const newError = new Error('non-error thrown: ' + errMsg);

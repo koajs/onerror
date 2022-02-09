@@ -71,7 +71,7 @@ describe('json.test.js', () => {
       .expect({ error: 'Internal Server Error' }, done);
   });
 
-  it('should wrap non-error object', done => {
+  it('should wrap non-error primitive value', done => {
     const app = new koa();
     app.on('error', () => {});
     onerror(app);
@@ -84,6 +84,21 @@ describe('json.test.js', () => {
       .set('Accept', 'application/json')
       .expect(500)
       .expect({ error: 'non-error thrown: 1' }, done);
+  });
+
+  it('should wrap non-error object and stringify it', done => {
+    const app = new koa();
+    app.on('error', () => {});
+    onerror(app);
+    app.use(() => {
+      throw { error: true };
+    });
+
+    request(app.callback())
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(500)
+      .expect({ error: 'non-error thrown: {"error":true}' }, done);
   });
 
   it('should wrap mock error obj instead of Error instance', done => {
