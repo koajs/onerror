@@ -134,7 +134,7 @@ const devTemplate = fs.readFileSync(path.join(getSourceDirname(), 'templates/dev
 const prodTemplate = fs.readFileSync(path.join(getSourceDirname(), 'templates/prod_error.html'), 'utf8');
 
 function isDev() {
-  return process.env.NODE_ENV === 'development';
+  return !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 }
 
 /**
@@ -172,7 +172,7 @@ function html(err: OnerrorError, ctx: any) {
   ctx.type = 'html';
 }
 
-export function getSourceDirname() {
+function getSourceDirname() {
   if (typeof __dirname === 'string') {
     return __dirname;
   }

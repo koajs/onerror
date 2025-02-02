@@ -1,16 +1,15 @@
-'use strict';
+const fs = require('node:fs');
+const Koa = require('koa');
+const { onerror } = require('./');
 
-const fs = require('fs');
-const koa = require('koa');
-const onerror = require('./');
-const app = koa();
+const app = new Koa();
 
 onerror(app);
 
-app.use(function* () {
-  // foo();
-  this.body = fs.createReadStream('not exist');
+app.use(async ctx => {
+  foo();
+  ctx.body = fs.createReadStream('not exist');
 });
 
 app.listen(3000);
-console.log('listening on port 3000');
+console.log('listening on port http://localhost:3000');

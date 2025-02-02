@@ -20,7 +20,7 @@ describe('test/multipart.test.ts', () => {
   });
 
   beforeEach(() => {
-    mm(process.env, 'NODE_ENV', 'development');
+    mm(process.env, 'NODE_ENV', '');
   });
 
   afterEach(() => {
