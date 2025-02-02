@@ -1,3 +1,19 @@
+# Changelog
+
+## [5.0.0](https://github.com/koajs/onerror/compare/v4.2.0...v5.0.0) (2025-02-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop Node.js < 18.19.0 support
+
+part of https://github.com/eggjs/egg/issues/3644
+
+https://github.com/eggjs/egg/issues/5257
+
+### Features
+
+* support cjs and esm both by tshy ([#38](https://github.com/koajs/onerror/issues/38)) ([8177649](https://github.com/koajs/onerror/commit/8177649a7f95795c02712748e6f19546eddf84ef))
 
 4.2.0 / 2022-02-09
 ==================
