@@ -21,6 +21,7 @@ export type OnerrorOptions = {
   json?: OnerrorHandler;
   html?: OnerrorHandler;
   all?: OnerrorHandler;
+  js?: OnerrorHandler;
   redirect?: string | null;
   accepts?: (...args: string[]) => string;
 };
@@ -109,6 +110,7 @@ export function onerror(app: any, options?: OnerrorOptions) {
     } else {
       type = this.accepts('html', 'text', 'json');
     }
+    debug('accepts type: %s', type);
     type = type || 'text';
     if (options.all) {
       options.all.call(this, err, this);
