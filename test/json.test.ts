@@ -28,6 +28,27 @@ describe('test/json.test.ts', () => {
       .expect({ error: 'foo is not defined' });
   });
 
+  it('should work on jsonp', async () => {
+    const app = new Koa();
+    app.on('error', () => {});
+    onerror(app, {
+      accepts(this: Context) {
+        return 'js';
+      },
+      js(err: OnerrorError, ctx: Context) {
+        ctx.body = `callback(${JSON.stringify({ error: err.message })})`;
+      },
+    });
+    app.use(commonError);
+
+    await request(app.callback())
+      .get('/')
+      .set('Accept', 'application/javascript')
+      .expect('Content-Type', 'application/javascript; charset=utf-8')
+      .expect(500)
+      .expect('callback({"error":"foo is not defined"})');
+  });
+
   it('should stream error ok', async () => {
     const app = new Koa();
     app.on('error', () => {});
