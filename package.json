@@ -1,6 +1,6 @@
 {
   "name": "koa-onerror",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "koa error handler, hack ctx.onerror",
   "repository": {
     "type": "git",

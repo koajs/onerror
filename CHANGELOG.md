@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/koajs/onerror/compare/v5.0.0...v5.0.1) (2025-02-02)
+
+
+### Bug Fixes
+
+* add js options ([#39](https://github.com/koajs/onerror/issues/39)) ([f38c05a](https://github.com/koajs/onerror/commit/f38c05a2b5ec7acdb2591d6d4717653cbdda3144))
+
 ## [5.0.0](https://github.com/koajs/onerror/compare/v4.2.0...v5.0.0) (2025-02-02)
 
 
