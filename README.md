@@ -1,21 +1,16 @@
-koa-onerror
-=================
+# koa-onerror
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
 [![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
 [![Known Vulnerabilities][snyk-image]][snyk-url]
 [![npm download][download-image]][download-url]
+[![Node.js Version](https://img.shields.io/node/v/koa-onerror.svg?style=flat)](https://nodejs.org/en/download/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://makeapullrequest.com)
 
 [npm-image]: https://img.shields.io/npm/v/koa-onerror.svg?style=flat
 [npm-url]: https://npmjs.org/package/koa-onerror
-[travis-image]: https://img.shields.io/travis/koajs/onerror.svg?style=flat
-[travis-url]: https://travis-ci.org/koajs/onerror
 [codecov-image]: https://codecov.io/gh/koajs/onerror/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/koajs/onerror
-[david-image]: https://img.shields.io/david/koajs/onerror.svg?style=flat
-[david-url]: https://david-dm.org/koajs/onerror
 [snyk-image]: https://snyk.io/test/npm/koa-onerror/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/koa-onerror
 [download-image]: https://img.shields.io/npm/dm/koa-onerror.svg?style=flat-square
@@ -24,6 +19,7 @@ koa-onerror
 an error handler for koa, hack ctx.onerror.
 
 different with [koa-error](https://github.com/koajs/error):
+
 - we can not just use try catch to handle all errors, steams' and events'
 errors are directly handle by `ctx.onerror`, so if we want to handle all
 errors in one place, the only way i can see is to hack `ctx.onerror`.
@@ -39,10 +35,10 @@ npm install koa-onerror
 
 ```js
 const fs = require('fs');
-const koa = require('koa');
-const onerror = require('koa-onerror');
+const Koa = require('koa');
+const { onerror } = require('koa-onerror');
 
-const app = new koa();
+const app = new Koa();
 
 onerror(app);
 
@@ -58,11 +54,11 @@ app.use(ctx => {
 onerror(app, options);
 ```
 
-* **all**: if options.all exist, ignore negotiation
-* **text**: text error handler
-* **json**: json error handler
-* **html**: html error handler
-* **redirect**: if accepct html, can redirect to another error page
+- **all**: if `options.all` exist, ignore negotiation
+- **text**: text error handler
+- **json**: json error handler
+- **html**: html error handler
+- **redirect**: if accept `html` or `text`, can redirect to another error page
 
 check out default handler to write your own handler.
 
@@ -76,4 +72,6 @@ check out default handler to write your own handler.
 
 ## Contributors
 
-[![](https://ergatejs.implements.io/badges/contributors/koajs/onerror.svg?size=96)](https://github.com/koajs/onerror/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=koajs/onerror)](https://github.com/koajs/onerror/graphs/contributors)
+
+Made with [contributors-img](https://contrib.rocks).

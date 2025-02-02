@@ -2,17 +2,6 @@
   "name": "koa-onerror",
   "version": "4.2.0",
   "description": "koa error handler, hack ctx.onerror",
-  "main": "index.js",
-  "scripts": {
-    "test": "NODE_ENV=development egg-bin test",
-    "test-cov": "NODE_ENV=development egg-bin cov",
-    "ci": "npm run lint && npm run test-cov",
-    "lint": "eslint test *.js --fix"
-  },
-  "files": [
-    "index.js",
-    "templates"
-  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/koajs/onerror.git"
@@ -28,28 +17,71 @@
     "url": "https://github.com/koajs/onerror/issues"
   },
   "homepage": "https://github.com/koajs/onerror",
-  "devDependencies": {
-    "autod": "*",
-    "co-busboy": "^1.4.0",
-    "egg-bin": "^4.3.5",
-    "egg-ci": "1",
-    "eslint": "4",
-    "eslint-config-egg": "5",
-    "formstream": "^1.1.0",
-    "koa": "2",
-    "mz-modules": "^2.1.0",
-    "pedding": "1",
-    "supertest": "3",
-    "urllib": "^2.29.1"
-  },
   "engines": {
-    "node": ">= 8.0.0"
-  },
-  "ci": {
-    "version": "8, 10"
+    "node": ">= 18.19.0"
   },
   "dependencies": {
     "escape-html": "^1.0.3",
-    "stream-wormhole": "^1.1.0"
-  }
+    "stream-wormhole": "^2.0.1"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.3",
+    "@eggjs/bin": "7",
+    "@eggjs/supertest": "^8.2.0",
+    "@eggjs/tsconfig": "1",
+    "@types/escape-html": "^1.0.4",
+    "@types/koa": "^2.15.0",
+    "@types/mocha": "10",
+    "@types/node": "22",
+    "co-busboy": "^1.4.0",
+    "eslint": "8",
+    "eslint-config-egg": "14",
+    "formstream": "^1.5.1",
+    "koa": "2",
+    "mm": "^4.0.2",
+    "rimraf": "6",
+    "snap-shot-it": "^7.9.10",
+    "tshy": "3",
+    "tshy-after": "1",
+    "typescript": "5",
+    "urllib": "^4.6.11"
+  },
+  "scripts": {
+    "lint": "eslint --cache src test --ext .ts",
+    "pretest": "npm run clean && npm run lint -- --fix",
+    "test": "egg-bin test",
+    "test:snapshot:update": "SNAPSHOT_UPDATE=1 egg-bin test",
+    "preci": "npm run clean &&  npm run lint",
+    "ci": "egg-bin cov",
+    "postci": "npm run prepublishOnly && npm run clean",
+    "clean": "rimraf dist",
+    "prepublishOnly": "tshy && tshy-after && attw --pack"
+  },
+  "type": "module",
+  "tshy": {
+    "exports": {
+      ".": "./src/index.ts",
+      "./package.json": "./package.json"
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/commonjs/index.d.ts",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/esm/index.js"
 }
