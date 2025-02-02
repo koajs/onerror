@@ -44,7 +44,7 @@
     "tshy": "3",
     "tshy-after": "1",
     "typescript": "5",
-    "urllib": "^2.29.1"
+    "urllib": "^4.6.11"
   },
   "scripts": {
     "lint": "eslint --cache src test --ext .ts",

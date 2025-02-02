@@ -1,9 +1,9 @@
-'use strict';
-
-const Koa = require('koa');
-const sleep = require('mz-modules/sleep');
-const parse = require('co-busboy');
-const onerror = require('..');
+import { scheduler } from 'node:timers/promises';
+import Koa from 'koa';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - co-busboy is not typed
+import parse from 'co-busboy';
+import { onerror } from '../src/index.js';
 
 const app = new Koa();
 app.on('error', () => {});
@@ -22,19 +22,19 @@ app.use(async ctx => {
     `;
     return;
   }
-  await sleep(10);
+  await scheduler.wait(10);
   if (!ctx.is('multipart')) {
     ctx.throw(400, 'Content-Type must be multipart/*');
   }
   const parts = parse(ctx, { autoFields: true });
   const stream = await parts();
-  console.log(stream.filename, parts.field);
+  // console.log(stream.filename, parts.field);
   stream.undefiend.error();
 });
 
-if (!module.parent) {
-  app.listen(8080);
-  console.log('Listen at http://127.0.0.1:8080');
-}
+// if (!module.parent) {
+//   app.listen(8080);
+//   console.log('Listen at http://127.0.0.1:8080');
+// }
 
-module.exports = app;
+export { app };
