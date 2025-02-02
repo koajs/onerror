@@ -43,7 +43,7 @@ export function onerror(app: any, options?: OnerrorOptions) {
       return;
     }
 
-    // ignore all pedding request stream
+    // ignore all padding request stream
     if (this.req) {
       sendToWormhole(this.req);
       debug('send the req to wormhole');
@@ -75,6 +75,7 @@ export function onerror(app: any, options?: OnerrorOptions) {
         }
       }
       err = newError;
+      debug('wrap err: %s', err);
     }
 
     const headerSent = this.headerSent || !this.writable;

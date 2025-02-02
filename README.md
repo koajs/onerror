@@ -33,10 +33,10 @@ npm install koa-onerror
 
 ```js
 const fs = require('fs');
-const koa = require('koa');
-const onerror = require('koa-onerror');
+const Koa = require('koa');
+const { onerror } = require('koa-onerror');
 
-const app = new koa();
+const app = new Koa();
 
 onerror(app);
 
